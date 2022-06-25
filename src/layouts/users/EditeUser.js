@@ -9,49 +9,67 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
-import { useRef, useState, useEffect } from "react";
-import { useRequest } from "lib/hooks/useRequest";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "context/AuthContext";
+import { useParams } from "react-router-dom";
+import { AppContext } from "context/AppContext";
 
-function AddAdmin() {
-    const [users, setUsers] = useState(null)
-    const sendRequest = useRequest()
+function  EditUser() {
+
+    const ctx = useContext(AuthContext)
+    const appCtx = useContext(AppContext)
+    const { id } = useParams()
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+    })
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}users/${id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + ctx.token
+            }
+        }).then(response => {
+            response.json().then(currentAdmin => setUser(currentAdmin.data))
+        })
+        .catch(e => e)
+    }, [])
 
     const nameRef = useRef(null)
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
     const passwordConfirmationRef = useRef(null)
 
-
-    useEffect(()=> {
-        fetch(process.env.REACT_APP_API_URL)
-        .then(res => res.json)
-        .then(json => {
-            console.log(json);
-            setUsers(json)
-        })
-    }, [])
-
-    const addAdmin = () => {
+    const EditUser = () => {
         const name = nameRef.current.querySelector('input[type=text]').value
         const email = emailRef.current.querySelector('input[type=email]').value
         const password = passwordRef.current.querySelector('input[type=password]').value
         const password_confirmation = passwordConfirmationRef.current.querySelector('input[type=password]').value
 
-
-        sendRequest(`${process.env.REACT_APP_API_URL}admins`, {}, {
-            name,
-            email,
-            password,
-            password_confirmation
-        }, {
-            auth: true,
-            type: 'json',
-            snackbar: true,
-            redirect: '/Users'
-        }, 'post')
+        fetch(`${process.env.REACT_APP_API_URL}users/${id}`, {
+            method: 'put',
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+                password_confirmation
+            }),
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': 'Bearer ' + ctx.token
+            }
+        }).then(response => {
+            response.json().then(userAdded => {
+                appCtx.snackbar.setMessage(userAdded.messages.join(' '))
+                if (userAdded.success) {
+                    appCtx.snackbar.setType('success')
+                } else {
+                    appCtx.snackbar.setType('error')
+                }
+                appCtx.snackbar.setOpen(true)
+            })
+        }).catch(e => e)
     }
-
-
 
     return (
         <DashboardLayout>
@@ -63,10 +81,10 @@ function AddAdmin() {
                             <MDBox pt={4} pb={3} px={3}>
                                 <MDBox component="form" role="form">
                                     <MDBox mb={2}>
-                                        <MDInput ref={nameRef} type="text" label="Name" variant="standard" fullWidth />
+                                        <MDInput ref={nameRef} value={user.name} onChange={(e) => {setUser({...user, name: e.target.value})}} type="text" label="Name" variant="standard" fullWidth />
                                     </MDBox>
                                     <MDBox mb={2}>
-                                        <MDInput ref={emailRef} type="email" label="Email" variant="standard" fullWidth />
+                                        <MDInput ref={emailRef} value={user.email} onChange={(e) => {setUser({...user, email: e.target.value})}} type="email" label="Email" variant="standard" fullWidth />
                                     </MDBox>
                                     <MDBox mb={2}>
                                         <MDInput ref={passwordRef} type="password" label="Password" variant="standard" fullWidth />
@@ -74,10 +92,10 @@ function AddAdmin() {
                                     <MDBox mb={2}>
                                         <MDInput ref={passwordConfirmationRef} type="password" label="Password Confirmation" variant="standard" fullWidth />
                                     </MDBox>
-
+                                    
                                     <MDBox mt={4} mb={1}>
-                                        <MDButton variant="gradient" color="info" fullWidth onClick={addAdmin}>
-                                            add User
+                                        <MDButton variant="gradient" color="info" fullWidth onClick={EditUser}>
+                                            save changes
                                         </MDButton>
                                     </MDBox>
                                 </MDBox>
@@ -90,4 +108,4 @@ function AddAdmin() {
     )
 }
 
-export default AddAdmin
+export default EditUser;

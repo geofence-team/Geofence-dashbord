@@ -12,7 +12,7 @@ import MDButton from "components/MDButton";
 import { useRef, useState, useEffect } from "react";
 import { useRequest } from "lib/hooks/useRequest";
 
-function AddAdmin() {
+function AddUser() {
     const [users, setUsers] = useState(null)
     const sendRequest = useRequest()
 
@@ -31,14 +31,14 @@ function AddAdmin() {
         })
     }, [])
 
-    const addAdmin = () => {
+    const AddUser = () => {
         const name = nameRef.current.querySelector('input[type=text]').value
         const email = emailRef.current.querySelector('input[type=email]').value
         const password = passwordRef.current.querySelector('input[type=password]').value
         const password_confirmation = passwordConfirmationRef.current.querySelector('input[type=password]').value
 
 
-        sendRequest(`${process.env.REACT_APP_API_URL}admins`, {}, {
+        sendRequest(`${process.env.REACT_APP_API_URL}users`, {}, {
             name,
             email,
             password,
@@ -76,7 +76,7 @@ function AddAdmin() {
                                     </MDBox>
 
                                     <MDBox mt={4} mb={1}>
-                                        <MDButton variant="gradient" color="info" fullWidth onClick={addAdmin}>
+                                        <MDButton variant="gradient" color="info" fullWidth onClick={AddUser}>
                                             add User
                                         </MDButton>
                                     </MDBox>
@@ -90,4 +90,4 @@ function AddAdmin() {
     )
 }
 
-export default AddAdmin
+export default AddUser;

@@ -22,22 +22,28 @@ const columns = [
     { Header: "actions", accessor: "actions", align: "center" },
 ]
 
-function Admins() {
+function Users() {
     const [rows, setRows] = useState([])
     const ctx = useContext(AuthContext)
     const sendRequest = useRequest()
      const [ users, setUser]=useState(null);
 
 
-    const deleteAdmin = (adminId) => {
+    const deleteUser = (userId) => {
         if (window.confirm('Are you sure')) {
-            sendRequest(`${process.env.REACT_APP_API_URL}admins/${adminId}`, {}, {}, {
+            sendRequest(`${process.env.REACT_APP_API_URL}users/${userId}`, {}, {}, {
+                method:"DELETE",
+                body:JSON.stringify(),
+                headers:{
+                  'Content-Type':'application/json',
+                  'Authorization':'Bearer'+ ctx.token
+                },
                 auth: true,
                 snackbar: true,
             }, 'delete').then(() => {
                 const updatedRows = rows.filter(function(row) {
-                    console.log(row.id, adminId)
-                    return (row.id != adminId)
+                    console.log(row.id, userId)
+                    return (row.id != userId)
                 })
                 console.log(updatedRows)
                 setRows(updatedRows)
@@ -112,4 +118,4 @@ useEffect(()=>{
     );
 }
 
-export default Admins;
+export default Users;

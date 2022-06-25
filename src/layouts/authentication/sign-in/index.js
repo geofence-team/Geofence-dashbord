@@ -57,7 +57,7 @@ function Basic() {
 	const login = () => {
 		const email = emailRef.current.querySelector('input[type=email]').value
 		const password = passwordRef.current.querySelector('input[type=password]').value
-		fetch(`${process.env.REACT_APP_API_URL}admins/login`, {
+		fetch(`${process.env.REACT_APP_API_URL}/users/signin`, {
 			method: 'POST',
 			body: JSON.stringify({
 				email,
@@ -68,13 +68,13 @@ function Basic() {
 			}
 		}).then(response => {
 			response.json().then(loggedIn => {
-				if (loggedIn.success) {
-					ctx.login(loggedIn.token)
+				if (loggedIn?.success) {
+					ctx.login(loggedIn?.result?.token)
 					navigate('/dashboard')
 				}
 			})
 		})
-		.catch(e => e)
+		.catch(e => console.log(e))
 	}
 
 	return (

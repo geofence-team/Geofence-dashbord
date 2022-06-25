@@ -48,14 +48,17 @@ import Places from "layouts/places";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Categories from "layouts/categories";
+// import Categories from "layouts/categories";
 import AddCategory from "layouts/categories/AddCategory";
 import EditCategory from "layouts/categories/EditCategory";
 import AddPlace from "layouts/places/AddPlace";
 import EditPlace from "layouts/places/EditPlace";
-import Admins from "layouts/admins";
-import AddAdmin from "layouts/admins/AddAdmin";
-import EditAdmin from "layouts/admins/EditAdmin";
+// import Admins from "layouts/admins";
+// import AddAdmin from "layouts/admins/AddAdmin";
+// import EditAdmin from "layouts/admins/EditAdmin";
+import AddUser from "layouts/users/AddUser";
+import EditUser from "layouts/users/EditeUser";
+import Users from "layouts/users";
 
 const routes = [
   {
@@ -98,16 +101,16 @@ const routes = [
     requiresAuth: true,
     inSideNav: false,
   },
-  {
-    type: "collapse",
-    name: "Categories",
-    key: "categories",
-    icon: <Icon fontSize="small">grid_on</Icon>,
-    route: "/categories",
-    component: <Categories />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Categories",
+  //   key: "categories",
+  //   icon: <Icon fontSize="small">grid_on</Icon>,
+  //   route: "/categories",
+  //   component: <Categories />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
   {
     key: "add-category",
     route: "/categories/add",
@@ -122,27 +125,51 @@ const routes = [
     requiresAuth: true,
     inSideNav: false,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Admins",
+  //   key: "Admins",
+  //   icon: <Icon fontSize="small">people</Icon>,
+  //   route: "/admins",
+  //   component: <Admins />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
+  // {
+  //   key: "add-admin",
+  //   route: "/admins/add",
+  //   component: <AddAdmin />,
+  //   requiresAuth: true,
+  //   inSideNav: false,
+  // },
+  // {
+  //   key: "add-admin",
+  //   route: "/admins/edit/:id",
+  //   component: <EditAdmin />,
+  //   requiresAuth: true,
+  //   inSideNav: false,
+  // },
   {
     type: "collapse",
-    name: "Admins",
-    key: "admins",
+    name: "Users",
+    key: "Users",
     icon: <Icon fontSize="small">people</Icon>,
-    route: "/admins",
-    component: <Admins />,
+    route: "/users",
+    component: <Users />,
     requiresAuth: true,
     inSideNav: true,
   },
   {
-    key: "add-admin",
-    route: "/admins/add",
-    component: <AddAdmin />,
+    key: "add-user",
+    route: "/users/add",
+    component: <AddUser />,
     requiresAuth: true,
     inSideNav: false,
   },
   {
-    key: "add-admin",
-    route: "/admins/edit/:id",
-    component: <EditAdmin />,
+    key: "add-user",
+    route: "/users/edit/:id",
+    component: <EditUser />,
     requiresAuth: true,
     inSideNav: false,
   },
