@@ -20,7 +20,6 @@ const columns = [
   { Header: "name", accessor: "name", align: "left" },
   { Header: "email", accessor: "email", align: "center" },
   { Header: "role", accessor: "role", align: "center" },
-  { Header: "Status", accessor: "Status", align: "center" },
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 //////////////////////////////////////////////////////////////////
@@ -143,6 +142,7 @@ function Users() {
                 name: <>{user.name}</>,
                 email: <>{user.email}</>,
                 role: <>{user.roleId}</>,
+
                 actions: (
                   <>
                     <MDButton
