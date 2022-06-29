@@ -25,7 +25,7 @@ function  EditUser() {
     })
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}users/${id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
             headers: {
                 'Authorization': 'Bearer ' + ctx.token
             }
@@ -47,7 +47,7 @@ function  EditUser() {
         const password_confirmation = passwordConfirmationRef.current.querySelector('input[type=password]').value
 
         fetch(`${process.env.REACT_APP_API_URL}users/${id}`, {
-            method: 'put',
+            method: 'PUT',
             body: JSON.stringify({
                 name,
                 email,

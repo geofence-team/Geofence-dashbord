@@ -1,72 +1,104 @@
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
 import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
-
 import { AuthContext } from "context/AuthContext";
-import { useRequest } from "lib/hooks/useRequest";
 import { Link } from "react-router-dom";
+import MDSnackbar from "components/MDSnackbar";
 
 const columns = [
-    { Header: "name", accessor: "name", width: "45%", align: "left" },
-    { Header: "email", accessor: "email", align: "left" },
+    { Header: "name", accessor: "name", align: "left" },
+    { Header: "email", accessor: "email", align: "center" },
+    // { Header: "phone", accessor: "phone", align: "center" },
+    // { Header: "role", accessor: "role", align: "center" },
     { Header: "actions", accessor: "actions", align: "center" },
 ]
 
 function Users() {
-    const [rows, setRows] = useState([])
-    const ctx = useContext(AuthContext)
-    const sendRequest = useRequest()
-     const [ users, setUser]=useState(null);
+    const [rows, setRows] = useState([]);
+    const ctx = useContext(AuthContext);
 
+    const [serverResponse, setServerResponse] = useState(" ");
+    const [snackBarType, setSnackBarType] = useState("success");
+    const [openSnackBar, setOpenSnackBar] = useState(false);
 
-    const deleteUser = (userId) => {
+    const closeSnackBar = () => setOpenSnackBar(false);
+
+    const deleteUser = async (id) => {
         if (window.confirm('Are you sure')) {
-            sendRequest(`${process.env.REACT_APP_API_URL}users/${userId}`, {}, {}, {
-                method:"DELETE",
-                body:JSON.stringify(),
-                headers:{
-                  'Content-Type':'application/json',
-                  'Authorization':'Bearer'+ ctx.token
+            await fetch(`${process.env.REACT_APP_API_URL}/admin/deactivate/${id}`, {
+                method: "PATCH",
+                body: JSON.stringify(),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + ctx.token
                 },
-                auth: true,
-                snackbar: true,
-            }, 'delete').then(() => {
-                const updatedRows = rows.filter(function(row) {
-                    console.log(row.id, userId)
-                    return (row.id != userId)
+            }).then(response => response.json())
+                .then(result => {
+                    setServerResponse(result.message.join(' '))
+                    if (result.success) {
+                        setSnackBarType('success')
+                    } else {
+                        setSnackBarType('error')
+                    }
+                    setOpenSnackBar(true);
                 })
-                console.log(updatedRows)
-                setRows(updatedRows)
-            })
+                .catch((error) => error);
         }
     }
 
-useEffect(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}users`,{
-        headers:{
-            'Authorization':'Bearer'+ctx.token
-        }
-    }).then(response=>{
-        response.json().then(users=>{
-            return{
-                name:<>{users.name}</>,
-                name:<>{users.email}</>,
-                name:<>{users.isActive}</>
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}/admin/getusers`, {
+            body: JSON.stringify(),
+            headers: {
+                'Authorization': 'Bearer ' + ctx.token,
+                'Content-Type': 'application/json'
             }
-        })
-    })
-})
+        }).then(response => {
+            response.json().then(users => {
+                console.log(users, "users")
+                const getusers = users.result.map((user) => {
+                    console.log(user.id, "users.id")
+                    return {
+                        name: <>{user.name}</>,
+                        email: <>{user.email}</>,
+                        //  role: <>{user.role}</>,
+                            actions: <>
+                            <MDButton variant="text" color="error" onClick={() => { deleteUser(user.id) }}>
+                                <Icon>Deactivate / Active</Icon>&nbsp;Deactivate / Active
+                            </MDButton>
+                            <Link to={`/users/edit/${user.id}`}>
+                                <MDButton variant="text" color="info">
+                                    <Icon>edit</Icon>&nbsp;edit
+                                </MDButton>
+                            </Link>
+                        </>,
+                    }
+                })
+                setRows(getusers)
+            })
+                .catch((e) => {
+                    console.log(e, "llllllll")
+                })
+        }).catch((e) => {
+            console.log(e)
+            alert("you are not Admin")
+        }
+        )
+
+    }, [])
+
     return (
+
         <DashboardLayout>
             <DashboardNavbar />
             <MDBox pt={6} pb={3}>
@@ -92,7 +124,7 @@ useEffect(()=>{
                                     <MDTypography variant="h6" color="white">
                                         Users Table
                                     </MDTypography>
-                                    <Link to='/admins/add'>
+                                    <Link to='/users/add'>
                                         <MDButton variant="text">
                                             <Icon>add_circle</Icon>&nbsp;Add
                                         </MDButton>
@@ -113,9 +145,20 @@ useEffect(()=>{
                     </Grid>
                 </Grid>
             </MDBox>
-            <Footer />
+            <MDSnackbar
+                color={snackBarType}
+                icon={snackBarType == 'success' ? 'check' : 'warning'}
+                title="User deleted"
+                content={serverResponse}
+                open={openSnackBar}
+                onClose={closeSnackBar}
+                close={closeSnackBar}
+                dateTime=""
+                bgWhite
+            />
         </DashboardLayout>
     );
 }
 
 export default Users;
+
