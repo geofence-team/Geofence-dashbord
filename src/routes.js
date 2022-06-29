@@ -37,18 +37,12 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-// import Tables from "layouts/tables";
-// import Billing from "layouts/billing";
-// import RTL from "layouts/rtl";
-// import Notifications from "layouts/notifications";
-// import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
 import Places from "layouts/places";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-// import Categories from "layouts/categories";
 import AddCategory from "layouts/categories/AddCategory";
 import EditCategory from "layouts/categories/EditCategory";
 import AddPlace from "layouts/places/AddPlace";
@@ -57,7 +51,6 @@ import EditPlace from "layouts/places/EditPlace";
 // import AddAdmin from "layouts/admins/AddAdmin";
 // import EditAdmin from "layouts/admins/EditAdmin";
 import AddUser from "layouts/users/AddUser";
-import EditUser from "layouts/users/EditeUser";
 import Users from "layouts/users";
 
 const routes = [
@@ -101,16 +94,6 @@ const routes = [
     requiresAuth: true,
     inSideNav: false,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Categories",
-  //   key: "categories",
-  //   icon: <Icon fontSize="small">grid_on</Icon>,
-  //   route: "/categories",
-  //   component: <Categories />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
   {
     key: "add-category",
     route: "/categories/add",
@@ -166,63 +149,6 @@ const routes = [
     requiresAuth: true,
     inSideNav: false,
   },
-  {
-    key: "add-user",
-    route: "/users/edit/:id",
-    component: <EditUser />,
-    requiresAuth: true,
-    inSideNav: false,
-  },
-  // {
-  //   type: "collapse",
-  //   name: "Tables",
-  //   key: "tables",
-  //   icon: <Icon fontSize="small">table_view</Icon>,
-  //   route: "/tables",
-  //   component: <Tables />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Billing",
-  //   key: "billing",
-  //   icon: <Icon fontSize="small">receipt_long</Icon>,
-  //   route: "/billing",
-  //   component: <Billing />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "RTL",
-  //   key: "rtl",
-  //   icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-  //   route: "/rtl",
-  //   component: <RTL />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Notifications",
-  //   key: "notifications",
-  //   icon: <Icon fontSize="small">notifications</Icon>,
-  //   route: "/notifications",
-  //   component: <Notifications />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Profile",
-  //   key: "profile",
-  //   icon: <Icon fontSize="small">person</Icon>,
-  //   route: "/profile",
-  //   component: <Profile />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
   {
     type: "collapse",
     name: "Sign In",
