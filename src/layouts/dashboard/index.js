@@ -18,69 +18,70 @@ import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
 // Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+//tomtom
+import React from "react";
+import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import { useState, useEffect, useRef } from "react";
+import "./style.css";
+import * as tt from "@tomtom-international/web-sdk-maps";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [map, setMap] = useState();
+  const mapContainer = useRef();
+  const Aljaleyah = { lon: 28.66733, lat: 41.0042962 };
+
+  useEffect(() => {
+    let map = tt.map({
+      key: "McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2",
+      container: mapContainer.current.id,
+      center: Aljaleyah,
+      zoom: 15,
+      language: "en-GB",
+    });
+    map.addControl(new tt.FullscreenControl());
+    map.addControl(new tt.NavigationControl());
+    map.on("load", () => {
+      fetch(
+        "https://api.tomtom.com/geofencing/1/fences/e552b075-76fb-40d6-afc9-deb544d17001?key=McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2"
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          map.addLayer({
+            id: "Fence ",
+            type: "fill",
+            source: {
+              type: "geojson",
+              data: result,
+            },
+            paint: {
+              "fill-color": "purple",
+              "fill-opacity": 0.6,
+            },
+          });
+        });
+    });
+    setMap(map);
+    return () => {
+      map.remove();
+    };
+    //eslint-disable-next-line
+  }, []);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            
-          </Grid>
-        </Grid>
-        <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid>
-          </Grid>
-        </MDBox>
-      </MDBox>
-      <Footer />
+      <div className="container">
+          <div ref={mapContainer} className="map" id="map" />
+        </div>
     </DashboardLayout>
   );
 }

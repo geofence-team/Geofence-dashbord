@@ -39,14 +39,12 @@ Coded by www.creative-tim.com
 import Dashboard from "layouts/dashboard";
 import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
-import Places from "layouts/places";
+import Geofences from "layouts/geofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import AddCategory from "layouts/categories/AddCategory";
-import EditCategory from "layouts/categories/EditCategory";
-import AddPlace from "layouts/places/AddPlace";
-import EditPlace from "layouts/places/EditPlace";
+import AddGeofence from "./layouts/geofences/AddGeofence";
+import EditGeofence from "./layouts/geofences/EditGeofencee";
 // import Admins from "layouts/admins";
 // import AddAdmin from "layouts/admins/AddAdmin";
 // import EditAdmin from "layouts/admins/EditAdmin";
@@ -66,45 +64,31 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Places",
-    key: "places",
+    name: "Geofences",
+    key: "geofences",
     icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/places",
-    component: <Places />,
+    route: "/geofences",
+    component: <Geofences />,
     requiresAuth: true,
     inSideNav: true,
   },
   {
     type: "collapse",
-    name: "Add Place",
-    key: "add-place",
+    name: "Add Geofence",
+    key: "add-geofence",
     icon: <Icon fontSize="small">grid_on</Icon>,
-    route: "/places/add",
-    component: <AddPlace />,
+    route: "/geofences/add",
+    component: <AddGeofence />,
     requiresAuth: true,
     inSideNav: false,
   },
   {
     type: "collapse",
-    name: "Edit Place",
-    key: "edit-place",
+    name: "Edit Geofence",
+    key: "edit-geofence",
     icon: <Icon fontSize="small">grid_on</Icon>,
-    route: "/places/edit/:id",
-    component: <EditPlace />,
-    requiresAuth: true,
-    inSideNav: false,
-  },
-  {
-    key: "add-category",
-    route: "/categories/add",
-    component: <AddCategory />,
-    requiresAuth: true,
-    inSideNav: false,
-  },
-  {
-    key: "add-category",
-    route: "/categories/edit/:id",
-    component: <EditCategory />,
+    route: "/geofences/edit/:id",
+    component: <EditGeofence />,
     requiresAuth: true,
     inSideNav: false,
   },
