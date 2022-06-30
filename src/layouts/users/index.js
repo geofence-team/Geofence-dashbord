@@ -23,7 +23,6 @@ const columns = [
   { Header: "email", accessor: "email", align: "center" },
   { Header: "role", accessor: "role", align: "center" },
   { Header: "actions", accessor: "actions", align: "center" },
-  { Header: "Status", accessor: "Status", align: "center" },
 ];
 
 //////////////////////////////////////////////////////////////////
@@ -108,27 +107,7 @@ function Users() {
         .catch((error) => error);
   };
 
-  const activate = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/admin/activate/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + ctx.token,
-      },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setServerResponse(result.message.join(" "));
-        if (result.success) {
-          setSnackBarType("success");
-        } else {
-          setSnackBarType("error");
-        }
-        setOpenSnackBar(true);
-      })
-      .catch((error) => error);
-  };
+ 
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admin/getusers`, {
@@ -148,18 +127,8 @@ function Users() {
                 username: <>{user.username}</>,
                 email: <>{user.email}</>,
                 role: <>{user.roleId}</>,
-                isActive: <>{user.isActive}</>,
                 actions: (
                   <>
-                    <MDButton
-                      variant="text"
-                      color="info"
-                      onClick={() => {
-                        activate(user.id);
-                      }}
-                    >
-                      Activate
-                    </MDButton>
                     <MDButton
                       variant="text"
                       color="error"
@@ -170,10 +139,6 @@ function Users() {
                       Deactivate
                     </MDButton>
                     <MDBox mt={0.5}>
-                      <Switch
-                        checked={Status}
-                        onChange={() => setStatus(!Status)}
-                      />
                     </MDBox>
                   </>
                 ),

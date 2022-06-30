@@ -57,7 +57,7 @@ function Basic() {
 	const login = () => {
 		const email = emailRef.current.querySelector('input[type=email]').value
 		const password = passwordRef.current.querySelector('input[type=password]').value
-		fetch(`${process.env.REACT_APP_API_URL}/users/signin`, {
+		fetch(`${process.env.REACT_APP_API_URL}/admin/signin`, {
 			method: 'POST',
 			body: JSON.stringify({
 				email,

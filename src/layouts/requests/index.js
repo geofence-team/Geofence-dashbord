@@ -1,35 +1,92 @@
+import { styled } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
+import MDBadge from "components/MDBadge";
+
 import MDTypography from "components/MDTypography";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
 import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
-import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
+import { Link } from "react-router-dom";
+import MDSnackbar from "components/MDSnackbar";
+import * as React from "react";
 
 const columns = [
-  { Header: "title", accessor: "title", width: "45%", align: "left" },
-  { Header: "description", accessor: "description", align: "left" },
-  { Header: "coordinates", accessor: "coordinates", align: "left" },
+  { Header: "name", accessor: "name", align: "left" },
+  { Header: "username", accessor: "username", align: "center" },
+  { Header: "email", accessor: "email", align: "center" },
+  { Header: "role", accessor: "role", align: "center" },
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 
-function Geofences() {
+//////////////////////////////////////////////////////////////////
+
+const AntSwitch = styled(Switch)(({ theme }) => ({
+  width: 28,
+  height: 16,
+  padding: 0,
+  display: "flex",
+  "&:active": {
+    "& .MuiSwitch-thumb": {
+      width: 15,
+    },
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      transform: "translateX(9px)",
+    },
+  },
+  "& .MuiSwitch-switchBase": {
+    padding: 2,
+    "&.Mui-checked": {
+      transform: "translateX(12px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: theme.palette.mode === "dark" ? "#177ddc" : "#1890ff",
+      },
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "0 2px 4px 0 rgb(0 35 11 / 20%)",
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    transition: theme.transitions.create(["width"], {
+      duration: 200,
+    }),
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,.35)"
+        : "rgba(0,0,0,.25)",
+    boxSizing: "border-box",
+  },
+}));
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+function Requests() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
+  const label = { inputProps: { "aria-label": "Switch demo" } };
   const [serverResponse, setServerResponse] = useState(" ");
   const [snackBarType, setSnackBarType] = useState("success");
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
+  const [Status, setStatus] = useState(true);
 
-  const deactivateGeofence = (id) => {
-	if (window.confirm('Are you sure you want to deactivate Geofence'))
-     fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
+
+
+  const activate = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/admin/activate/${id}`, {
       method: "PATCH",
       body: JSON.stringify(),
       headers: {
@@ -50,9 +107,8 @@ function Geofences() {
       .catch((error) => error);
   };
 
-  
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
+    fetch(`${process.env.REACT_APP_API_URL}/admin/signuprequests`, {
       body: JSON.stringify(),
       headers: {
         Authorization: "Bearer " + ctx.token,
@@ -62,28 +118,31 @@ function Geofences() {
       .then((response) => {
         response
           .json()
-          .then((geofences) => {
-            const getGeofences = geofences.result.map((geofence) => {
+          .then((users) => {
+            const getusers = users.result.map((user) => {
               return {
-                title: <>{geofence.title}</>,
-                description: <>{geofence.description}</>,
-                coordinates: <>{geofence.coordinates}</>,
+                name: <>{user.name}</>,
+                username: <>{user.username}</>,
+                email: <>{user.email}</>,
+                role: <>{user.roleId}</>,
                 actions: (
                   <>
-                    <MDButton
+                  <MDButton
                       variant="text"
-                      color="error"
+                      color="info"
                       onClick={() => {
-                        deactivateGeofence(geofence.id);
+                        activate(user.id);
                       }}
                     >
-                      Deactivate
+                      Activate
                     </MDButton>
+                    <MDBox mt={0.5}>
+                    </MDBox>
                   </>
                 ),
               };
             });
-            setRows(getGeofences);
+            setRows(getusers);
           })
           .catch((e) => {});
       })
@@ -93,6 +152,7 @@ function Geofences() {
       });
   }, []);
 
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -117,9 +177,9 @@ function Geofences() {
                   alignItems="center"
                 >
                   <MDTypography variant="h6" color="white">
-                    Geofences Table
+                    Signup Requests Table
                   </MDTypography>
-                  <Link to="/geofences/add">
+                  <Link to="/users/add">
                     <MDButton variant="text">
                       <Icon>add_circle</Icon>&nbsp;Add
                     </MDButton>
@@ -139,9 +199,19 @@ function Geofences() {
           </Grid>
         </Grid>
       </MDBox>
-      <Footer />
+      <MDSnackbar
+        color={snackBarType}
+        icon={snackBarType == "success" ? "check" : "warning"}
+        title="User deleted"
+        content={serverResponse}
+        open={openSnackBar}
+        onClose={closeSnackBar}
+        close={closeSnackBar}
+        dateTime=""
+        bgWhite
+      />
     </DashboardLayout>
   );
 }
 
-export default Geofences;
+export default Requests;
