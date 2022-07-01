@@ -11,6 +11,7 @@ import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
+import axios from "axios";
 
 const columns = [
   { Header: "title", accessor: "title", align: "center" },
@@ -28,103 +29,123 @@ function MyGeofences() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
 
-  const deactivateGeofence = (id) => {
-    if (window.confirm("Are you sure you want to deactivate Geofence"))
-      fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ctx.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          setServerResponse(result.message.join(" "));
-          if (result.success) {
-            setSnackBarType("success");
-          } else {
-            setSnackBarType("error");
-          }
-          setOpenSnackBar(true);
-        })
-        .catch((error) => error);
-  };
+  const [users, setUsers] = useState([]);
 
-  const activateGeofence = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(),
+  const [isActive, setIsActive] = useState([]);
+  let [counter, setCounter] = useState(0);
+
+  // const deactivateGeofence = (id) => {
+  //   fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify(),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + ctx.token,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       setServerResponse(result.message.join(" "));
+  //       if (result.success) {
+  //         setSnackBarType("success");
+  //       } else {
+  //         setSnackBarType("error");
+  //       }
+  //       setOpenSnackBar(true);
+  //     })
+  //     .catch((error) => error);
+  // };
+
+  // const activateGeofence = async (id) => {
+  //   await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify(),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + ctx.token,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       setServerResponse(result.message.join(" "));
+  //       if (result.success) {
+  //         setSnackBarType("success");
+  //       } else {
+  //         setSnackBarType("error");
+  //       }
+  //       setOpenSnackBar(true);
+  //     })
+  //     .catch((error) => error);
+  // };
+
+  const fetchAllGeo = async () => {
+    const data = await axios({
+      url: `${process.env.REACT_APP_API_URL}/geofences`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
       },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setServerResponse(result.message.join(" "));
-        if (result.success) {
-          setSnackBarType("success");
-        } else {
-          setSnackBarType("error");
-        }
-        setOpenSnackBar(true);
-      })
-      .catch((error) => error);
+      method: "GET",
+    });
+    setUsers(data);
+
+    return data;
+  };
+
+  const updageGeo = async (id, isActive) => {
+    const data = await axios({
+      url: `${process.env.REACT_APP_API_URL}/geofences`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + ctx.token,
+      },
+      data: {
+        isActive: !isActive,
+        id: id,
+      },
+      method: "PUT",
+    });
+
+    setIsActive(data);
+    setCounter(++counter);
+    console.log(counter, "counterrrrrrrrrrr");
+
+    return data;
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/Geofences`, {
-      body: JSON.stringify(),
-      headers: {
-        Authorization: "Bearer " + ctx.token,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        response
-          .json()
-          .then((geofences) => {
-            const getGeofences = geofences.result.map((geofence) => {
-              return {
-                title: <>{geofence.title}</>,
-                description: <>{geofence.description}</>,
-                coordinates: <>{geofence.coordinates}</>,
-                status: <>{geofence.coordinates}</>,
-                actions: (
-                  <>
-                    <MDButton
-                      variant="text"
-                      color="info"
-                      onClick={() => {
-                        activateGeofence(geofence.id);
-                      }}
-                    >
-                      Activate
-                    </MDButton>
-                    <MDButton
-                      variant="text"
-                      color="error"
-                      onClick={() => {
-                        deactivateGeofence(geofence.id);
-                      }}
-                    >
-                      Deactivate
-                    </MDButton>
-                  </>
-                ),
-              };
-            });
-            setRows(getGeofences);
-          })
-          .catch((e) => {});
-      })
-      .catch((e) => {
-        console.log(e);
-        alert("you are not Admin");
-      });
-  }, []);
+    fetchAllGeo();
+  }, [counter]);
 
+  useEffect(() => {
+    setRows(
+      users?.data?.result
+        ? users?.data?.result?.map((st, i) => {
+            console.log(st.title, "stjjjjjjjjjjjjjjjjjjjjjj");
+            return {
+              title: <div>{st?.title}</div>,
+              description: <div>{st?.description}</div>,
+              coordinates: <div>{st?.coordinates}</div>,
+              status: (
+                <div>{st?.isActive ? <h4>active</h4> : <h4>inActive</h4>}</div>
+              ),
+              actions: (
+                <MDButton
+                  key={st.id}
+                  variant="contained"
+                  color={st.isActive ? "error" : "success"}
+                  onClick={() => {
+                    updageGeo(st.id, st.isActive);
+                  }}
+                >
+                  {st.isActive ? <h4>DeActivate</h4> : <h4>Activate</h4>}
+                </MDButton>
+              ),
+            };
+          })
+        : []
+    );
+  }, [users]);
   return (
     <DashboardLayout>
       <DashboardNavbar />

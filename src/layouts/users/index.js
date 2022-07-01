@@ -173,7 +173,7 @@ function Users() {
                     deactivate(st.id);
                   }}
                 >
-                  {!st.isAccepted ? <h4>Active</h4> : <h4>Not Active</h4>}
+                  {!st.isActive ? <h4>Active</h4> : <h4>Not Active</h4>}
                 </MDButton>
               ),
             };
