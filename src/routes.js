@@ -50,9 +50,9 @@ import EditGeofence from "./layouts/geofences/EditGeofencee";
 // import EditAdmin from "layouts/admins/EditAdmin";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
-import Requests from "layouts/request/Requests";
 import MyGeofences from "layouts/myGeo";
-import Requests from "layouts/requests";
+import ActivateUser from "layouts/request/activateUser";
+import AcceptRequest from "layouts/request/accepteRequest";
 import InActiveGeo from "layouts/inActiveGeo";
 import GeofenceRequests from "layouts/geoRequests";
 
@@ -77,13 +77,23 @@ const routes = [
     requiresAuth: true,
     inSideNav: true,
   },
+  // {
+  //   type: "collapse",
+  //   name: "ActivateUser",
+  //   key: "ActivateUser",
+  //   icon: <Icon fontSize="small">storefront</Icon>,
+  //   route: "/activate-user",
+  //   component: <ActivateUser />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
   {
     type: "collapse",
-    name: "Requests",
-    key: "request",
+    name: "AcceptRequest",
+    key: "AcceptRequest",
     icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/requests",
-    component: <Requests />,
+    route: "/accept-request",
+    component: <AcceptRequest />,
     requiresAuth: true,
     inSideNav: true,
   },
@@ -170,26 +180,26 @@ const routes = [
     requiresAuth: true,
     inSideNav: false,
   },
-  {
-    type: "collapse",
-    name: "Signup Requests",
-    key: "Signup-requests",
-    icon: <Icon fontSize="small">people</Icon>,
-    route: "/requests",
-    component: <Requests />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
-  {
-    type: "collapse",
-    name: "Geofence Requests",
-    key: "Geofence-requests",
-    icon: <Icon fontSize="small">people</Icon>,
-    route: "/requests",
-    component: <GeofenceRequests />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Signup Requests",
+  //   key: "Signup-requests",
+  //   icon: <Icon fontSize="small">people</Icon>,
+  //   route: "/requests",
+  //   component: <Requests />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Geofence Requests",
+  //   key: "Geofence-requests",
+  //   icon: <Icon fontSize="small">people</Icon>,
+  //   route: "/requests",
+  //   component: <GeofenceRequests />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
   {
     type: "collapse",
     name: "Sign In",

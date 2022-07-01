@@ -24,101 +24,16 @@ const columns = [
   { Header: "actions", accessor: "actions", width: "25%", align: "center" },
 ];
 
-function Requests() {
-  ////////////////////////
-  // const fetchStudents = async () => {
-  //   const token = window.localStorage.getItem("token") || null;
-
-  //   const data = await axios({
-  //     url: `http://localhost:3000/api/v1/admin/allStudents`,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: token ? `Bearer ${token}` : undefined,
-  //     },
-  //     method: "GET",
-  //   });
-  //   setStudentHolder(data);
-
-  //   return data;
-  // };
-
-  // const dataStatus = { status: true };
-
-  // const updateStatus = async (id, status) => {
-  //   const token = window.localStorage.getItem("token") || null;
-
-  //   const data = await axios({
-  //     url: `http://localhost:3000/api/v1/admin/updateStatus/` + id,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: token ? `Bearer ${token}` : undefined,
-  //     },
-  //     data: {
-  //       status: !status,
-  //     },
-  //     method: "PUT",
-  //   });
-  //   // setStudentHolder(data);
-  //   return data;
-  // };
-
-  // useEffect(() => {
-  //   fetchStudents();
-  //   // updateStatus();
-  // }, [counter]);
-  // // console.log(studentHolder?.data?.result);
-  // // console.log(instructorsHolder?.data?.result);
-
-  // const [isActive, setIsActive] = useState();
-  // const [status, setStatus] = useState();
-
-  // useEffect(() => {
-  //   setRows(
-  //     studentHolder?.data?.result
-  //       ? studentHolder?.data?.result?.map((st, i) => {
-  //           setStatus(st.status);
-  //           // setIsActive(status);
-  //           console.log(st.status, "jjjjjjjjjjjjjjjj");
-  //           return {
-  //             Students: <div>{st?.first_name}</div>,
-  //             status: (
-  //               <div>
-  //                 {st.status ? <h4>activated</h4> : <h4>not activated</h4>}
-  //               </div>
-  //             ),
-  //             Activation: (
-  //               <MDButton
-  //                 key={st.id}
-  //                 variant="contained"
-  //                 color={st.status ? "error" : "success"}
-  //                 onClick={() => {
-  //                   // setIsActive(!st.status);
-  //                   // setStatus(!status);
-  //                   updateStatus(st.id, st.status).then(() => {
-  //                     setCounter(++counter);
-  //                   });
-  //                   // setStatus(isActive);
-  //                 }}
-  //               >
-  //                 {console.log(status, "isssss")}
-  //                 {!st.status ? <h4>Activate</h4> : <h4>Deactivate</h4>}
-  //               </MDButton>
-  //             ),
-  //           };
-  //         })
-  //       : []
-  //   );
-  // }, [studentHolder, isActive, status, counter]);
-
-  /////////////////////
-
+function AcceptRequest() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
-  // const sendRequest = useRequest();
-  // const [users, setUsers] = useState([]);
+
   const [request, setRequest] = useState([]);
 
-  const [counter, setCounter] = useState(0);
+  const [isActive, setIsActive] = useState();
+  const [accept, setIsAccept] = useState([]);
+
+  let [counter, setCounter] = useState(0);
 
   ///////////////////
 
@@ -149,6 +64,10 @@ function Requests() {
       },
       method: "PUT",
     });
+
+    setIsAccept(data);
+    setCounter(++counter);
+
     return data;
   };
 
@@ -156,14 +75,12 @@ function Requests() {
     fetchAllRequests();
   }, [counter]);
 
-  const [status, setStatus] = useState();
-
   useEffect(() => {
     setRows(
       request?.data?.result
         ? request?.data?.result?.map((st, i) => {
-            setStatus(st.isAccepted);
-            console.log(st.User.name, "statussssssssssss");
+            // console.log(st.id, "idddddddddddddddddddd");
+            console.log(st, "statussssssssssss");
             return {
               name: <div>{st?.User?.name}</div>,
               goefence: <div>{st?.Geofence?.title}</div>,
@@ -178,10 +95,7 @@ function Requests() {
                   variant="contained"
                   color={st.isAccepted ? "error" : "success"}
                   onClick={() => {
-                    updateStatus(st.isAccepted, st.userId).then(() => {
-                      setCounter(++counter);
-                      console.log(counter, "counterrrrrr");
-                    });
+                    updateStatus(st.isAccepted, st.userId);
                   }}
                 >
                   {!st.isAccepted ? <h4>Accepted</h4> : <h4>Not Accepted</h4>}
@@ -191,7 +105,8 @@ function Requests() {
           })
         : []
     );
-  }, [request, status, counter]);
+  }, [request]);
+  console.log(rows);
 
   //////////////////
 
@@ -301,4 +216,4 @@ function Requests() {
   );
 }
 
-export default Requests;
+export default AcceptRequest;

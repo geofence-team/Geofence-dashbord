@@ -73,7 +73,7 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-function Requests() {
+function Acti() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -82,8 +82,6 @@ function Requests() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
   const [Status, setStatus] = useState(true);
-
-
 
   const activate = async (id) => {
     await fetch(`${process.env.REACT_APP_API_URL}/admin/activate/${id}`, {
@@ -127,7 +125,7 @@ function Requests() {
                 role: <>{user.roleId}</>,
                 actions: (
                   <>
-                  <MDButton
+                    <MDButton
                       variant="text"
                       color="info"
                       onClick={() => {
@@ -136,8 +134,7 @@ function Requests() {
                     >
                       Activate
                     </MDButton>
-                    <MDBox mt={0.5}>
-                    </MDBox>
+                    <MDBox mt={0.5}></MDBox>
                   </>
                 ),
               };
@@ -152,7 +149,6 @@ function Requests() {
       });
   }, []);
 
-  
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -177,7 +173,7 @@ function Requests() {
                   alignItems="center"
                 >
                   <MDTypography variant="h6" color="white">
-                    Signup Requests Table
+                    Signup Acti Table
                   </MDTypography>
                   <Link to="/users/add">
                     <MDButton variant="text">
@@ -214,4 +210,4 @@ function Requests() {
   );
 }
 
-export default Requests;
+export default Acti;

@@ -28,27 +28,27 @@ function Admins() {
   const sendRequest = useRequest();
   const [users, setUser] = useState(null);
 
-  const deleteAdmin = (adminId) => {
-    if (window.confirm("Are you sure")) {
-      sendRequest(
-        `${process.env.REACT_APP_API_URL}admins/${adminId}`,
-        {},
-        {},
-        {
-          auth: true,
-          snackbar: true,
-        },
-        "delete"
-      ).then(() => {
-        const updatedRows = rows.filter(function (row) {
-          console.log(row.id, adminId);
-          return row.id != adminId;
-        });
-        console.log(updatedRows);
-        setRows(updatedRows);
-      });
-    }
-  };
+  // const deleteAdmin = (adminId) => {
+  //   if (window.confirm("Are you sure")) {
+  //     sendRequest(
+  //       `${process.env.REACT_APP_API_URL}admins/${adminId}`,
+  //       {},
+  //       {},
+  //       {
+  //         auth: true,
+  //         snackbar: true,
+  //       },
+  //       "delete"
+  //     ).then(() => {
+  //       const updatedRows = rows.filter(function (row) {
+  //         console.log(row.id, adminId);
+  //         return row.id != adminId;
+  //       });
+  //       console.log(updatedRows);
+  //       setRows(updatedRows);
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}users`, {
