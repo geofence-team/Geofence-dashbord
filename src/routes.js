@@ -50,6 +50,7 @@ import EditGeofence from "./layouts/geofences/EditGeofencee";
 // import EditAdmin from "layouts/admins/EditAdmin";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
+import Requests from "layouts/request/Requests";
 
 const routes = [
   {
@@ -69,6 +70,16 @@ const routes = [
     icon: <Icon fontSize="small">storefront</Icon>,
     route: "/geofences",
     component: <Geofences />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
+    name: "Requests",
+    key: "request",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/requests",
+    component: <Requests />,
     requiresAuth: true,
     inSideNav: true,
   },
