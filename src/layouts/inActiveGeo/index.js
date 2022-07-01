@@ -19,7 +19,8 @@ const columns = [
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 
-function Geofences() {
+function InActiveGeo() {
+    
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
   const [serverResponse, setServerResponse] = useState(" ");
@@ -27,9 +28,10 @@ function Geofences() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
 
-  const deactivateGeofence = (id) => {
-	if (window.confirm('Are you sure you want to deactivate Geofence'))
-     fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
+
+
+  const activateGeofence = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
       method: "PATCH",
       body: JSON.stringify(),
       headers: {
@@ -50,9 +52,8 @@ function Geofences() {
       .catch((error) => error);
   };
 
-  
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
+    fetch(`${process.env.REACT_APP_API_URL}/geofences/allinactive`, {
       body: JSON.stringify(),
       headers: {
         Authorization: "Bearer " + ctx.token,
@@ -72,12 +73,12 @@ function Geofences() {
                   <>
                     <MDButton
                       variant="text"
-                      color="error"
+                      color="info"
                       onClick={() => {
-                        deactivateGeofence(geofence.id);
+                        activateGeofence(geofence.id);
                       }}
                     >
-                      Deactivate
+                      Activate
                     </MDButton>
                   </>
                 ),
@@ -144,4 +145,4 @@ function Geofences() {
   );
 }
 
-export default Geofences;
+export default InActiveGeo;

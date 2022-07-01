@@ -19,7 +19,8 @@ const columns = [
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 
-function Geofences() {
+function MyGeofences() {
+    
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
   const [serverResponse, setServerResponse] = useState(" ");
@@ -50,9 +51,30 @@ function Geofences() {
       .catch((error) => error);
   };
 
-  
+  const activateGeofence = async (id) => {
+    await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + ctx.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        setServerResponse(result.message.join(" "));
+        if (result.success) {
+          setSnackBarType("success");
+        } else {
+          setSnackBarType("error");
+        }
+        setOpenSnackBar(true);
+      })
+      .catch((error) => error);
+  };
+
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
+    fetch(`${process.env.REACT_APP_API_URL}/Geofences`, {
       body: JSON.stringify(),
       headers: {
         Authorization: "Bearer " + ctx.token,
@@ -70,6 +92,15 @@ function Geofences() {
                 coordinates: <>{geofence.coordinates}</>,
                 actions: (
                   <>
+                    <MDButton
+                      variant="text"
+                      color="info"
+                      onClick={() => {
+                        activateGeofence(geofence.id);
+                      }}
+                    >
+                      Activate
+                    </MDButton>
                     <MDButton
                       variant="text"
                       color="error"
@@ -144,4 +175,4 @@ function Geofences() {
   );
 }
 
-export default Geofences;
+export default MyGeofences;

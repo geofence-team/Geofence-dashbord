@@ -51,6 +51,10 @@ import EditGeofence from "./layouts/geofences/EditGeofencee";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import Requests from "layouts/request/Requests";
+import MyGeofences from "layouts/myGeo";
+import Requests from "layouts/requests";
+import InActiveGeo from "layouts/inActiveGeo";
+import GeofenceRequests from "layouts/geoRequests";
 
 const routes = [
   {
@@ -65,7 +69,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Geofences",
+    name: "All Geofences",
     key: "geofences",
     icon: <Icon fontSize="small">storefront</Icon>,
     route: "/geofences",
@@ -103,7 +107,19 @@ const routes = [
     requiresAuth: true,
     inSideNav: false,
   },
+  {
+    type: "collapse",
+    name: "My Geofences",
+    key: "My-Geofences",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/myGeo",
+    component: <MyGeofences />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
+
   // {
+
   //   type: "collapse",
   //   name: "Admins",
   //   key: "Admins",
@@ -129,6 +145,16 @@ const routes = [
   // },
   {
     type: "collapse",
+    name: "Inactive Geofences",
+    key: "In-ActiveGeo",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/InActiveGeo",
+    component: <InActiveGeo />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
     name: "Users",
     key: "Users",
     icon: <Icon fontSize="small">people</Icon>,
@@ -143,6 +169,26 @@ const routes = [
     component: <AddUser />,
     requiresAuth: true,
     inSideNav: false,
+  },
+  {
+    type: "collapse",
+    name: "Signup Requests",
+    key: "Signup-requests",
+    icon: <Icon fontSize="small">people</Icon>,
+    route: "/requests",
+    component: <Requests />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
+    name: "Geofence Requests",
+    key: "Geofence-requests",
+    icon: <Icon fontSize="small">people</Icon>,
+    route: "/requests",
+    component: <GeofenceRequests />,
+    requiresAuth: true,
+    inSideNav: true,
   },
   {
     type: "collapse",
