@@ -23,15 +23,15 @@ const columns = [
   { Header: "username", accessor: "username", align: "center" },
   { Header: "email", accessor: "email", align: "center" },
   { Header: "role", accessor: "role", align: "center" },
-  { Header: "status", accessor: "status", align: "center" },
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 
 //////////////////////////////////////////////////////////////////
 
+
 /////////////////////////////////////////////////////////////////////////////////////
 
-function Users() {
+function Activate() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -43,10 +43,79 @@ function Users() {
   let [counter, setCounter] = useState(0);
   const [users, setUsers] = useState([]);
   const [accept, setIsAccept] = useState([]);
+  const [isActive, setIsActive] = useState([]);
+
+
+  // const activate = async (id) => {
+  //   await fetch(`${process.env.REACT_APP_API_URL}/admin/activate/${id}`, {
+  //     method: "PATCH",
+  //     body: JSON.stringify(),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + ctx.token,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       setServerResponse(result.message.join(" "));
+  //       if (result.success) {
+  //         setSnackBarType("success");
+  //       } else {
+  //         setSnackBarType("error");
+  //       }
+  //       setOpenSnackBar(true);
+  //     })
+  //     .catch((error) => error);
+  // };
+
+
+  // useEffect(() => {
+  //   fetch(`${process.env.REACT_APP_API_URL}/admin/signuprequests`, {
+  //     body: JSON.stringify(),
+  //     headers: {
+  //       Authorization: "Bearer " + ctx.token,
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       response
+  //         .json()
+  //         .then((users) => {
+  //           const getusers = users.result.map((user) => {
+  //             return {
+  //               name: <>{user.name}</>,
+  //               username: <>{user.username}</>,
+  //               email: <>{user.email}</>,
+  //               role: <>{user.roleId}</>,
+  //               actions: (
+  //                 <>
+  //                   <MDButton
+  //                     variant="text"
+  //                     color="info"
+  //                     onClick={() => {
+  //                       activate(user.id);
+  //                     }}
+  //                   >
+  //                     Activate
+  //                   </MDButton>
+  //                   <MDBox mt={0.5}></MDBox>
+  //                 </>
+  //               ),
+  //             };
+  //           });
+  //           setRows(getusers);
+  //         })
+  //         .catch((e) => {});
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //       alert("you are not Admin");
+  //     });
+  // }, [users]);
 
   const fetchAllUsers = async () => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/admin/getusers`,
+      url: `${process.env.REACT_APP_API_URL}/admin/signuprequests`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
@@ -58,25 +127,25 @@ function Users() {
     return data;
   };
 
-
-  const deactivate = async (id) => {
+  const updateUser = async (id, isActive) => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/admin/deactivate/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/admin/activate/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
       },
-      data: JSON.stringify(),
+      data: {
+        isActive: !isActive,
+        id: id,
+      },
       method: "PATCH",
     });
 
-    setIsAccept(data);
+    setIsActive(data);
     setCounter(++counter);
 
     return data;
   };
-
-  /////////////////
 
   useEffect(() => {
     fetchAllUsers();
@@ -90,7 +159,6 @@ function Users() {
               name: <div>{st?.name}</div>,
               username: <div>{st?.username}</div>,
               email: <div>{st?.email}</div>,
-              role: <div>{st?.roleId}</div>,
               status: (
                 <div>{st?.isActive ? <h4>active</h4> : <h4>inActive</h4>}</div>
               ),
@@ -100,10 +168,10 @@ function Users() {
                   variant="contained"
                   color={st.isActive ? "error" : "success"}
                   onClick={() => {
-                    deactivate(st.id);
+                    updateUser(st.id, st.isActive);
                   }}
                 >
-                  {!st.isActive ? <h4>Active</h4> : <h4>Deactivate</h4>}
+                  {st.isActive ? <h4>DeActivate</h4> : <h4>Activate</h4>}
                 </MDButton>
               ),
             };
@@ -111,6 +179,7 @@ function Users() {
         : []
     );
   }, [users]);
+
 
   return (
     <DashboardLayout>
@@ -173,4 +242,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Activate;

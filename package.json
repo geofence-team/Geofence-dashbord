@@ -30,6 +30,7 @@
     "@testing-library/user-event": "13.5.0",
     "@tomtom-international/web-sdk-maps": "^6.20.0",
     "@turf/turf": "^6.5.0",
+    "axios": "^0.27.2",
     "chart.js": "3.4.1",
     "chroma-js": "2.4.2",
     "prop-types": "15.8.1",

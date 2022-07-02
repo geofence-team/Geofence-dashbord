@@ -15,7 +15,6 @@ import { AuthContext } from "context/AuthContext";
 const columns = [
   { Header: "title", accessor: "title", width: "45%", align: "left" },
   { Header: "description", accessor: "description", align: "left" },
-  { Header: "coordinates", accessor: "coordinates", align: "left" },
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 
@@ -29,28 +28,6 @@ function InActiveGeo() {
   const closeSnackBar = () => setOpenSnackBar(false);
 
 
-
-  const activateGeofence = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + ctx.token,
-      },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        setServerResponse(result.message.join(" "));
-        if (result.success) {
-          setSnackBarType("success");
-        } else {
-          setSnackBarType("error");
-        }
-        setOpenSnackBar(true);
-      })
-      .catch((error) => error);
-  };
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/geofences/allinactive`, {
@@ -68,18 +45,9 @@ function InActiveGeo() {
               return {
                 title: <>{geofence.title}</>,
                 description: <>{geofence.description}</>,
-                coordinates: <>{geofence.coordinates}</>,
                 actions: (
                   <>
-                    <MDButton
-                      variant="text"
-                      color="info"
-                      onClick={() => {
-                        activateGeofence(geofence.id);
-                      }}
-                    >
-                      Activate
-                    </MDButton>
+                   
                   </>
                 ),
               };

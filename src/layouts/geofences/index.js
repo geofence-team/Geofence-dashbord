@@ -12,11 +12,9 @@ import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
 
-
 const columns = [
-  { Header: "title", accessor: "title", width: "45%", align: "left" },
-  { Header: "description", accessor: "description", align: "left" },
-  // { Header: "coordinates", accessor: "coordinates", align: "left" },
+  { Header: "title", accessor: "title", align: "center" },
+  { Header: "description", accessor: "description", align: "center" },
 ];
 
 function Geofences() {
@@ -27,7 +25,29 @@ function Geofences() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
 
-  
+  const deactivateGeofence = (id) => {
+    if (window.confirm("Are you sure you want to deactivate Geofence"))
+      fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + ctx.token,
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          setServerResponse(result.message.join(" "));
+          if (result.success) {
+            setSnackBarType("success");
+          } else {
+            setSnackBarType("error");
+          }
+          setOpenSnackBar(true);
+        })
+        .catch((error) => error);
+  };
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
       body: JSON.stringify(),
@@ -44,8 +64,19 @@ function Geofences() {
               return {
                 title: <>{geofence.title}</>,
                 description: <>{geofence.description}</>,
-                // coordinates: <>{geofence.coordinates}</>,
-                
+                // actions: (
+                //   <>
+                //     <MDButton
+                //       variant="text"
+                //       color="error"
+                //       onClick={() => {
+                //         deactivateGeofence(geofence.id);
+                //       }}
+                //     >
+                //       Deactivate
+                //     </MDButton>
+                // </>
+                // ),
               };
             });
             setRows(getGeofences);
