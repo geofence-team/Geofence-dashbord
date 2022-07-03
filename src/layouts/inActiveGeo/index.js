@@ -11,6 +11,7 @@ import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
+import Admins from "layouts/admins";
 
 const columns = [
   { Header: "title", accessor: "title", width: "45%", align: "left" },
@@ -28,6 +29,46 @@ function InActiveGeo() {
   const closeSnackBar = () => setOpenSnackBar(false);
 
 
+//   const deleteAdmin = (adminId) => {
+//     if (window.confirm('Are you sure')) {
+//         sendRequest(`${process.env.REACT_APP_API_URL}admins/${adminId}`, {}, {}, {
+//             auth: true,
+//             snackbar: true,
+//         }, 'delete').then(() => {
+//             const updatedRows = rows.filter(function(row) {
+//                 console.log(row.id, adminId)
+//                 return (row.id != adminId)
+//             })
+//             console.log(updatedRows)
+//             setRows(updatedRows)
+//         })
+//     }
+// }
+
+
+const deleteGeo = (id) => {
+  
+  if (window.confirm("Are you sure you want to delete Geofence"))
+    fetch(`${process.env.REACT_APP_API_URL}/geofences/delete/${id}`, {
+      method: "DELETE",
+      body: JSON.stringify(),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + ctx.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        setServerResponse(result.message.join(" "));
+        if (result.success) {
+          setSnackBarType("success");
+        } else {
+          setSnackBarType("error");
+        }
+        setOpenSnackBar(true);
+      })
+      .catch((error) => error);
+};
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/geofences/allinactive`, {
@@ -41,13 +82,17 @@ function InActiveGeo() {
         response
           .json()
           .then((geofences) => {
+            console.log(geofences, "hhhhhhhhh")
             const getGeofences = geofences.result.map((geofence) => {
               return {
                 title: <>{geofence.title}</>,
                 description: <>{geofence.description}</>,
                 actions: (
                   <>
-                   
+                   <MDButton variant="text" color="error" onClick={() => { deleteGeo(geofence.id) }}>
+                    { console.log(geofence,"dmkckdfcjkw")}
+                                    <Icon>delete</Icon>&nbsp;delete
+                                </MDButton>
                   </>
                 ),
               };
@@ -56,10 +101,10 @@ function InActiveGeo() {
           })
           .catch((e) => {});
       })
-      .catch((e) => {
-        console.log(e);
-        alert("you are not Admin");
-      });
+      // .catch((e) => {
+      //   console.log(e);
+      //   alert("you are not Admin");
+      // });
   }, []);
 
   return (

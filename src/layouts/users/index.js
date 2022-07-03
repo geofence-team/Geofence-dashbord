@@ -104,9 +104,10 @@ function Users() {
                   }}
                 >
                   {!st.isActive ? <h4>Active</h4> : <h4>Deactivate</h4>}
+                  {console.log(st, "users")}
                 </MDButton>
               ),
-            };
+            }; 
           })
         : []
     );
