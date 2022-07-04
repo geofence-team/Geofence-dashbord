@@ -11,12 +11,10 @@ import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
-
 const columns = [
   { Header: "title", accessor: "title", align: "center" },
   { Header: "description", accessor: "description", align: "center" },
 ];
-
 function Geofences() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
@@ -24,7 +22,6 @@ function Geofences() {
   const [snackBarType, setSnackBarType] = useState("success");
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
-
   const deactivateGeofence = (id) => {
     if (window.confirm("Are you sure you want to deactivate Geofence"))
       fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
@@ -47,7 +44,6 @@ function Geofences() {
         })
         .catch((error) => error);
   };
-
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
       body: JSON.stringify(),
@@ -88,7 +84,6 @@ function Geofences() {
         alert("you are not Admin");
       });
   }, []);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -139,5 +134,4 @@ function Geofences() {
     </DashboardLayout>
   );
 }
-
 export default Geofences;

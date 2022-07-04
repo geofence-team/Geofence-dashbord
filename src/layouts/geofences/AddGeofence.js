@@ -1,6 +1,5 @@
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -8,7 +7,6 @@ import Card from "@mui/material/Card";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import Box from '@mui/material/Box';
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -22,8 +20,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
-function Map({ center, zoom, setLat, setLng }) {
+function Map({ center, zoom}) {
     const mapRef = useRef(null)
     const [map, setMap] = useState()
     useEffect(() => {
@@ -32,61 +29,30 @@ function Map({ center, zoom, setLat, setLng }) {
             zoom,
         }));
     }, []);
-    useEffect(() => {
-        if (map) {
-            map.addListener("click", (mapsMouseEvent) => {
-                console.log(mapsMouseEvent)
-                const coordinates = mapsMouseEvent.latLng.toJSON()
-                setLat(coordinates.lat)
-                setLng(coordinates.lng)
-            });
-        }
-    }, [map])
-    return (<div ref={mapRef} style={{ height: '400px' }} />)
+   
 }
 function AddGeofence() {
-    const [longitude, setLongitude] = useState(28.5)
-    const [latitude, setLatitude] = useState(40.5)
-    const [category, setCategory] = useState(0)
-    const PlaceTitleRef = useRef(null)
-    const PlacePicRef = useRef(null)
-    const PlaceDescRef = useRef(null)
-    const PlaceCatIDRef = useRef(null)
-    const PlaceLongRef = useRef(null)
-    const PlaceLatRef = useRef(null)
+    const [coordinates, setCoordinates] = useState([[]])
+    const GeofenceTitleRef = useRef(null)
+    const GeofenceDecRef = useRef(null)
+    const GeofenceCordRef = useRef(null)
     const ctx = useContext(AuthContext)
     const [serverResponse, setServerResponse] = useState(" ")
     const [snackBarType, setSnackBarType] = useState("success")
     const [openSnackBar, setOpenSnackBar] = useState(false)
     const closeSnackBar = () => setOpenSnackBar(false);
 
-    const [categoriesData, setCategoriesData] = useState([])
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}categories`)
-            .then(response => {
-                response.json().then(categories => {
-                    console.log(categories.data)
-                    setCategoriesData(categories.data)
-                })
-            })
-    }, [])
     const savePlace = () => {
-        const title = PlaceTitleRef.current.querySelector('input[type=text]').value
-        const description = PlaceDescRef.current.querySelector('input[type=text]').value
-        // const category_id = PlaceCatIDRef.current.querySelector('input[type=text]').value
-        const longitude = PlaceLongRef.current.querySelector('input[type=text]').value
-        const latitude = PlaceLatRef.current.querySelector('input[type=text]').value
-        const picture = PlacePicRef.current.querySelector('input[type=file]').files
-        console.log(picture)
+
+        const title = GeofenceTitleRef.current.value
+        const description = GeofenceDecRef.current.value
+        const coordinates = GeofenceCordRef.current.value
         var formdata = new FormData();
         formdata.append("title", title);
         formdata.append("description", description);
-        formdata.append("category_id", category);
-        formdata.append("longitude", longitude);
-        formdata.append("latitude", latitude);
-        formdata.append("picture", picture[0]);
+        formdata.append("coordinates", coordinates);
         console.log(formdata)
-        fetch(`${process.env.REACT_APP_API_URL}places`, {
+        fetch(`${process.env.REACT_APP_API_URL}/geofences/`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + ctx.token
@@ -107,9 +73,7 @@ function AddGeofence() {
                 console.error('Error:', error);
             });
     }
-    const handleCategoryChange = (event) => {
-        setCategory(event.target.value)
-    }
+
 
     return (
         <DashboardLayout>
@@ -135,44 +99,17 @@ function AddGeofence() {
                             <MDBox pt={4} pb={3} px={3}>
                                 <MDBox component="form" role="form">
                                     <MDBox mb={2}>
-                                        <MDInput type="text" label="Place Title" variant="standard" fullWidth ref={PlaceTitleRef} />
+                                        <MDInput type="text" label="Geofence Title" name="title" variant="standard" fullWidth ref={GeofenceTitleRef} />
                                     </MDBox>
                                     <MDBox mb={2}>
-                                        <MDInput type="text" label="Place Description" variant="standard" fullWidth ref={PlaceDescRef} />
+                                        <MDInput type="text" name="description" label="Geofence Description" variant="standard" fullWidth ref={GeofenceDecRef} />
                                     </MDBox>
                                     <MDBox mb={2}>
-                                        <MDInput value={latitude} type="text" label="Latitude" variant="standard" fullWidth ref={PlaceLatRef} />
+                                        <MDInput name="coordinates" type="text" label="Coordinates" variant="standard" fullWidth ref={GeofenceCordRef} />
                                     </MDBox>
                                     <MDBox mb={2}>
-                                        <MDInput value={longitude} type="text" label="longitude" variant="standard" fullWidth ref={PlaceLongRef} />
                                     </MDBox>
-                                    <MDBox mb={2}>
-                                        <Box sx={{ minWidth: 120 }}>
-                                            <FormControl fullWidth>
-                                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    value={category}
-                                                    label="Category"
-                                                    style={{padding: '20px 0'}}
-                                                    onChange={handleCategoryChange}
-                                                >
-                                                    {categoriesData.map((category, i) => {
-                                                        return <MenuItem value={category.id} key={category.id}>{category.title}</MenuItem>
-                                                    })}
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
-                                    </MDBox>
-                                    <MDBox mb={2}>
-                                        <MDInput type="file" label="Picture" variant="standard" fullWidth ref={PlacePicRef} />
-                                    </MDBox>
-                                    <MDBox mb={2}>
-                                        <Wrapper apiKey={''} >
-                                            <Map center={{ lat: latitude, lng: longitude }} setLat={setLatitude} setLng={setLongitude} zoom={8} />
-                                        </Wrapper>
-                                    </MDBox>
+                                
                                     <MDBox mt={4} mb={1}>
                                         <MDButton variant="gradient" color="info" fullWidth onClick={savePlace}>
                                             Save Place

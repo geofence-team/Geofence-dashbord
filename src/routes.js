@@ -52,7 +52,6 @@ import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
 import AcceptRequest from "layouts/request/accepteRequest";
-import InActiveGeo from "layouts/inActiveGeo";
 import ActivateUser from "layouts/request/activateUser";
 import GeofenceRequests from "layouts/geoRequests";
 
@@ -129,7 +128,6 @@ const routes = [
   },
 
   // {
-
   //   type: "collapse",
   //   name: "Admins",
   //   key: "Admins",
@@ -153,16 +151,6 @@ const routes = [
   //   requiresAuth: true,
   //   inSideNav: false,
   // },
-  {
-    type: "collapse",
-    name: "Inactive Geofences",
-    key: "In-ActiveGeo",
-    icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/InActiveGeo",
-    component: <InActiveGeo />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
   {
     type: "collapse",
     name: "Users",
