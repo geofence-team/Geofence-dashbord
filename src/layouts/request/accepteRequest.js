@@ -51,7 +51,7 @@ function AcceptRequest() {
     return data;
   };
 
-  const updateStatus = async (isAccepted, userId) => {
+  const updateStatus = async (isAccepted, userId, geofenceId) => {
     const data = await axios({
       url: `${process.env.REACT_APP_API_URL}/request/acceptRequest`,
       headers: {
@@ -61,6 +61,7 @@ function AcceptRequest() {
       data: {
         isAccepted: !isAccepted,
         userId: userId,
+        geofenceId: geofenceId,
       },
       method: "PUT",
     });
@@ -86,7 +87,7 @@ function AcceptRequest() {
               goefence: <div>{st?.Geofence?.title}</div>,
               status: (
                 <div>
-                  {st.isAccepted ? <h4>accepted</h4> : <h4>not accepted</h4>}
+                  {st.isAccepted ? <h4>accpeted</h4> : <h4>no accpeted</h4>}
                 </div>
               ),
               actions: (
@@ -95,10 +96,10 @@ function AcceptRequest() {
                   variant="contained"
                   color={st.isAccepted ? "error" : "success"}
                   onClick={() => {
-                    updateStatus(st.isAccepted, st.userId);
+                    updateStatus(st.isAccepted, st.userId, st.geofenceId);
                   }}
                 >
-                  {!st.isAccepted ? <h4>Accepted</h4> : <h4>Not Accepted</h4>}
+                  {!st.isAccepted ? <h4>Accept</h4> : <h4>Deny</h4>}
                 </MDButton>
               ),
             };

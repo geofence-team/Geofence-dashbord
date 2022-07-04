@@ -37,7 +37,15 @@ function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [map, setMap] = useState();
   const mapContainer = useRef();
-  const Aljaleyah = { lon: 28.66733, lat: 41.0042962 };
+  const Aljaleyah = { lon: 28.7567138671875, lat: 41.062009478169955 };
+  const Avceler = { lon: 28.7567138671875, lat: 41.062009478169955 };
+
+  // { lon: 28.7567138671875, lat: 41.062009478169955 },
+  // { lon: 28.7567138671875, lat: 41.062009478169955 },
+
+  //{ lon: 28.7567138671875, lat: 41.062009478169955 };
+  // 28.7567138671875,
+  //               41.062009478169955
 
   useEffect(() => {
     let map = tt.map({
@@ -47,11 +55,21 @@ function Dashboard() {
       zoom: 15,
       language: "en-GB",
     });
-    map.addControl(new tt.FullscreenControl());
+    // let map1 = tt.map({
+    //   key: "McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2",
+    //   container: mapContainer.current.id,
+    //   center: Avceler,
+    //   zoom: 15,
+    //   language: "en-GB",
+    // });
+
+    map.addControl(new tt.GeolocateControl());
+    // map.addControl(new tt.FullscreenControl());
     map.addControl(new tt.NavigationControl());
+
     map.on("load", () => {
       fetch(
-        "https://api.tomtom.com/geofencing/1/fences/e552b075-76fb-40d6-afc9-deb544d17001?key=McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2"
+        "https://api.tomtom.com/geofencing/1/fences/24ca72d6-db94-4cc3-b9b2-67346dd87fe3?key=McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2"
       )
         .then((response) => response.json())
         .then((result) => {
@@ -69,6 +87,28 @@ function Dashboard() {
           });
         });
     });
+
+    // map1.on("load", () => {
+    //   fetch(
+    //     "https://api.tomtom.com/geofencing/1/fences/24ca72d6-db94-4cc3-b9b2-67346dd87fe3?key=McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2"
+    //   )
+    //     .then((response) => response.json())
+    //     .then((result) => {
+    //       map1.addLayer({
+    //         id: "Fence ",
+    //         type: "fill",
+    //         source: {
+    //           type: "geojson",
+    //           data: result,
+    //         },
+    //         paint: {
+    //           "fill-color": "purple",
+    //           "fill-opacity": 0.6,
+    //         },
+    //       });
+    //     });
+    // });
+
     setMap(map);
     return () => {
       map.remove();
@@ -80,8 +120,8 @@ function Dashboard() {
     <DashboardLayout>
       <DashboardNavbar />
       <div className="container">
-          <div ref={mapContainer} className="map" id="map" />
-        </div>
+        <div ref={mapContainer} className="map" id="map" />
+      </div>
     </DashboardLayout>
   );
 }

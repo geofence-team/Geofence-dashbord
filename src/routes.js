@@ -53,7 +53,7 @@ import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
 import ActivateUser from "layouts/request/activateUser";
 import AcceptRequest from "layouts/request/accepteRequest";
-import InActiveGeo from "layouts/inActiveGeo";
+// import InActiveGeo from "layouts/inActiveGeo";
 import GeofenceRequests from "layouts/geoRequests";
 
 const routes = [
@@ -77,16 +77,16 @@ const routes = [
     requiresAuth: true,
     inSideNav: true,
   },
-  // {
-  //   type: "collapse",
-  //   name: "ActivateUser",
-  //   key: "ActivateUser",
-  //   icon: <Icon fontSize="small">storefront</Icon>,
-  //   route: "/activate-user",
-  //   component: <ActivateUser />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
+  {
+    type: "collapse",
+    name: "Add Geofence",
+    key: "add-geofence",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/add-geofence",
+    component: <AddGeofence />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
   {
     type: "collapse",
     name: "AcceptRequest",
@@ -153,16 +153,16 @@ const routes = [
   //   requiresAuth: true,
   //   inSideNav: false,
   // },
-  {
-    type: "collapse",
-    name: "Inactive Geofences",
-    key: "In-ActiveGeo",
-    icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/InActiveGeo",
-    component: <InActiveGeo />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Inactive Geofences",
+  //   key: "In-ActiveGeo",
+  //   icon: <Icon fontSize="small">storefront</Icon>,
+  //   route: "/InActiveGeo",
+  //   component: <InActiveGeo />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
   {
     type: "collapse",
     name: "Users",

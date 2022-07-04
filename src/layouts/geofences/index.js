@@ -6,16 +6,18 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useDeferredValue } from "react";
 import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
+import axios from "axios";
 
 const columns = [
   { Header: "title", accessor: "title", align: "center" },
   { Header: "description", accessor: "description", align: "center" },
-  { Header: "coordinates", accessor: "coordinates", align: "center" },
+  { Header: "status", accessor: "status", align: "center" },
+  // { Header: "coordinates", accessor: "coordinates", align: "center" },
   // { Header: "actions", accessor: "actions", align: "center" },
 ];
 
@@ -26,71 +28,55 @@ function Geofences() {
   const [snackBarType, setSnackBarType] = useState("success");
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
+  const [geo, setGeo] = useState([]);
 
-  const deactivateGeofence = (id) => {
-    if (window.confirm("Are you sure you want to deactivate Geofence"))
-      fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ctx.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          setServerResponse(result.message.join(" "));
-          if (result.success) {
-            setSnackBarType("success");
-          } else {
-            setSnackBarType("error");
-          }
-          setOpenSnackBar(true);
-        })
-        .catch((error) => error);
+  const fetchAllGeo = async () => {
+    const data = await axios({
+      url: `${process.env.REACT_APP_API_URL}/geofences/all`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + ctx.token,
+      },
+      method: "GET",
+    });
+
+    setGeo(data);
+
+    return data;
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
-      body: JSON.stringify(),
-      headers: {
-        Authorization: "Bearer " + ctx.token,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        response
-          .json()
-          .then((geofences) => {
-            const getGeofences = geofences.result.map((geofence) => {
-              return {
-                title: <>{geofence.title}</>,
-                description: <>{geofence.description}</>,
-                coordinates: <>{geofence.coordinates}</>,
-                // actions: (
-                //   <>
-                //     <MDButton
-                //       variant="text"
-                //       color="error"
-                //       onClick={() => {
-                //         deactivateGeofence(geofence.id);
-                //       }}
-                //     >
-                //       Deactivate
-                //     </MDButton>
-                // </>
-                // ),
-              };
-            });
-            setRows(getGeofences);
-          })
-          .catch((e) => {});
-      })
-      .catch((e) => {
-        console.log(e);
-        alert("you are not Admin");
-      });
+    fetchAllGeo();
   }, []);
+
+  useEffect(() => {
+    setRows(
+      geo?.data?.result
+        ? geo?.data?.result?.map((st, i) => {
+            // console.log(st.id, "idddddddddddddddddddd");
+            console.log(st, "statussssssssssss");
+            return {
+              title: <div>{st?.title}</div>,
+              description: <div>{st?.description}</div>,
+              // status: (
+              //   <div>
+              //     {st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
+              //   </div>
+              // ),
+              status: (
+                <MDTypography
+                  variant="h6"
+                  color={st?.isActive ? "success" : "error"}
+                >
+                  {st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
+                </MDTypography>
+              ),
+              // coordinates: <div>{st?.coordinates}</div>,
+            };
+          })
+        : []
+    );
+  }, [geo]);
 
   return (
     <DashboardLayout>
