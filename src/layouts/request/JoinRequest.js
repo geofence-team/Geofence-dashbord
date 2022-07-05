@@ -24,7 +24,7 @@ const columns = [
   { Header: "actions", accessor: "actions", width: "25%", align: "center" },
 ];
 
-function AcceptRequest() {
+function JoinRequest() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
 
@@ -86,7 +86,7 @@ function AcceptRequest() {
               goefence: <div>{st?.Geofence?.title}</div>,
               status: (
                 <div>
-                  {st.isAccepted ? <h4>accpeted</h4> : <h4>no accpeted</h4>}
+                  {st.isAccepted ? <h4>Allowed to join</h4> : <h4>not Allowed to join </h4>}
                 </div>
               ),
               actions: (
@@ -98,7 +98,7 @@ function AcceptRequest() {
                     updateStatus(st.id , st.userId);
                   }}
                 >
-                  {!st.isAccepted ? <h4>Accept</h4> : <h4>Deny</h4>}
+                  {!st.isAccepted ? <h4>Allow</h4> : <h4>Don't Allow</h4>}
                 </MDButton>
               ),
             };
@@ -132,12 +132,12 @@ function AcceptRequest() {
                   alignItems="center"
                 >
                   <MDTypography variant="h6" color="white">
-                    Users Table
+                  Join Request Table
                   </MDTypography>
                   <Link to="/admins/add">
-                    <MDButton variant="text">
+                    {/* <MDButton variant="text">
                       <Icon>add_circle</Icon>&nbsp;Add
-                    </MDButton>
+                    </MDButton> */}
                   </Link>
                 </Grid>
               </MDBox>
@@ -159,4 +159,4 @@ function AcceptRequest() {
   );
 }
 
-export default AcceptRequest;
+export default JoinRequest;

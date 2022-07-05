@@ -43,7 +43,7 @@ import Geofences from "layouts/geofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import AddGeofence from "./layouts/geofences/AddGeofence";
+// import AddGeofence from "./layouts/geofences/AddGeofence";
 import EditGeofence from "./layouts/geofences/EditGeofencee";
 // import Admins from "layouts/admins";
 // import AddAdmin from "layouts/admins/AddAdmin";
@@ -51,7 +51,7 @@ import EditGeofence from "./layouts/geofences/EditGeofencee";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
-import AcceptRequest from "layouts/request/accepteRequest";
+import JoinRequest from "layouts/request/JoinRequest";
 // import InActiveGeo from "layouts/inActiveGeo";
 import GeofenceRequests from "layouts/geoRequests";
 
@@ -76,16 +76,16 @@ const routes = [
     requiresAuth: true,
     inSideNav: true,
   },
-  {
-    type: "collapse",
-    name: "Add Geofence",
-    key: "add-geofence",
-    icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/add-geofence",
-    component: <AddGeofence />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Add Geofence",
+  //   key: "add-geofence",
+  //   icon: <Icon fontSize="small">storefront</Icon>,
+  //   route: "/add-geofence",
+  //   component: <AddGeofence />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
   // {
   //   type: "collapse",
   //   name: "Activate User",
@@ -98,11 +98,11 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Accept Request",
-    key: "Accept-Request",
+    name: "Join Request",
+    key: "Join-Request",
     icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/accept-request",
-    component: <AcceptRequest />,
+    route: "/Join-Request",
+    component: <JoinRequest />,
     requiresAuth: true,
     inSideNav: true,
   },
