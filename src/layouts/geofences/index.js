@@ -20,7 +20,6 @@ const columns = [
   // { Header: "coordinates", accessor: "coordinates", align: "center" },
   // { Header: "actions", accessor: "actions", align: "center" },
 ];
-
 function Geofences() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
@@ -44,7 +43,6 @@ function Geofences() {
 
     return data;
   };
-
   useEffect(() => {
     fetchAllGeo();
   }, []);
@@ -128,5 +126,4 @@ function Geofences() {
     </DashboardLayout>
   );
 }
-
 export default Geofences;

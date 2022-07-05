@@ -34,7 +34,6 @@ function MyGeofences() {
   const [isActive, setIsActive] = useState([]);
   let [counter, setCounter] = useState(0);
 
-
   const fetchAllGeo = async () => {
     const data = await axios({
       url: `${process.env.REACT_APP_API_URL}/geofences`,
@@ -79,22 +78,24 @@ function MyGeofences() {
       users?.data?.result
         ? users?.data?.result?.map((st, i) => {
             return {
-              title: <div>{st?.title}</div>,
-              description: <div>{st?.description}</div>,
-              coordinates: <div>{st?.coordinates}</div>,
+              title: <div>{user?.title}</div>,
+              description: <div>{user?.description}</div>,
+              coordinates: <div>{user?.coordinates}</div>,
               status: (
-                <div>{st?.isActive ? <h4>active</h4> : <h4>inActive</h4>}</div>
+                <div>
+                  {user?.isActive ? <h4>active</h4> : <h4>inActive</h4>}
+                </div>
               ),
               actions: (
                 <MDButton
-                  key={st.id}
+                  key={user.id}
                   variant="contained"
-                  color={st.isActive ? "error" : "success"}
+                  color={user.isActive ? "error" : "success"}
                   onClick={() => {
-                    updageGeo(st.id, st.isActive);
+                    updageGeo(user.id, user.isActive);
                   }}
                 >
-                  {st.isActive ? <h4>DeActivate</h4> : <h4>Activate</h4>}
+                  {user.isActive ? <h4>DeActivate</h4> : <h4>Activate</h4>}
                 </MDButton>
               ),
             };

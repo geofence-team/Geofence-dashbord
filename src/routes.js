@@ -138,7 +138,6 @@ const routes = [
   },
 
   // {
-
   //   type: "collapse",
   //   name: "Admins",
   //   key: "Admins",
@@ -161,16 +160,6 @@ const routes = [
   //   component: <EditAdmin />,
   //   requiresAuth: true,
   //   inSideNav: false,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Inactive Geofences",
-  //   key: "In-ActiveGeo",
-  //   icon: <Icon fontSize="small">storefront</Icon>,
-  //   route: "/InActiveGeo",
-  //   component: <InActiveGeo />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
   // },
   {
     type: "collapse",
