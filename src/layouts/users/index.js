@@ -6,7 +6,6 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDBadge from "components/MDBadge";
-
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
@@ -60,7 +59,7 @@ function Users() {
 
   const deactivate = async (id) => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/admin/changeStatus/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/admin/deactivate/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,

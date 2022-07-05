@@ -39,7 +39,7 @@ function AcceptRequest() {
 
   const fetchAllRequests = async () => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/request`,
+      url: `${process.env.REACT_APP_API_URL}/requests/getRequestedUsers`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
@@ -51,17 +51,16 @@ function AcceptRequest() {
     return data;
   };
 
-  const updateStatus = async (isAccepted, userId, geofenceId) => {
+  const updateStatus = async (id, userId) => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/request/acceptRequest`,
+      url: `${process.env.REACT_APP_API_URL}/requests/approve/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
       },
       data: {
-        isAccepted: !isAccepted,
-        userId: userId,
-        geofenceId: geofenceId,
+        id,
+        userId
       },
       method: "PUT",
     });
@@ -96,7 +95,7 @@ function AcceptRequest() {
                   variant="contained"
                   color={st.isAccepted ? "error" : "success"}
                   onClick={() => {
-                    updateStatus(st.isAccepted, st.userId, st.geofenceId);
+                    updateStatus(st.id , st.userId);
                   }}
                 >
                   {!st.isAccepted ? <h4>Accept</h4> : <h4>Deny</h4>}

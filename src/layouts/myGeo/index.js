@@ -43,7 +43,10 @@ function MyGeofences() {
       },
       method: "GET",
     });
+    
+    console.log(data, 'gjghghghfhgfhgf')
     setUsers(data);
+    
 
     return data;
   };
@@ -76,7 +79,7 @@ function MyGeofences() {
   useEffect(() => {
     setRows(
       users?.data?.result
-        ? users?.data?.result?.map((st, i) => {
+        ? users?.data?.result?.map((user, i) => {
             return {
               title: <div>{user?.title}</div>,
               description: <div>{user?.description}</div>,

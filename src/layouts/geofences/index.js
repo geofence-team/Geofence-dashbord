@@ -17,8 +17,7 @@ const columns = [
   { Header: "title", accessor: "title", align: "center" },
   { Header: "description", accessor: "description", align: "center" },
   { Header: "status", accessor: "status", align: "center" },
-  // { Header: "coordinates", accessor: "coordinates", align: "center" },
-  // { Header: "actions", accessor: "actions", align: "center" },
+
 ];
 function Geofences() {
   const [rows, setRows] = useState([]);
@@ -31,7 +30,7 @@ function Geofences() {
 
   const fetchAllGeo = async () => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/geofences/all`,
+      url: `${process.env.REACT_APP_API_URL}/geofences/allgeosadmin`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
@@ -56,17 +55,12 @@ function Geofences() {
             return {
               title: <div>{st?.title}</div>,
               description: <div>{st?.description}</div>,
-              // status: (
-              //   <div>
-              //     {st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
-              //   </div>
-              // ),
               status: (
                 <MDTypography
                   variant="h6"
-                  color={st?.isActive ? "success" : "error"}
+                  color={!st?.isActive ? "success" : "error"}
                 >
-                  {st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
+                  {!st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
                 </MDTypography>
               ),
               // coordinates: <div>{st?.coordinates}</div>,
