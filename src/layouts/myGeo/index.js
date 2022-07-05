@@ -34,49 +34,6 @@ function MyGeofences() {
   const [isActive, setIsActive] = useState([]);
   let [counter, setCounter] = useState(0);
 
-  // const deactivateGeofence = (id) => {
-  //   fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
-  //     method: "PATCH",
-  //     body: JSON.stringify(),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + ctx.token,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setServerResponse(result.message.join(" "));
-  //       if (result.success) {
-  //         setSnackBarType("success");
-  //       } else {
-  //         setSnackBarType("error");
-  //       }
-  //       setOpenSnackBar(true);
-  //     })
-  //     .catch((error) => error);
-  // };
-
-  // const activateGeofence = async (id) => {
-  //   await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
-  //     method: "PATCH",
-  //     body: JSON.stringify(),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + ctx.token,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setServerResponse(result.message.join(" "));
-  //       if (result.success) {
-  //         setSnackBarType("success");
-  //       } else {
-  //         setSnackBarType("error");
-  //       }
-  //       setOpenSnackBar(true);
-  //     })
-  //     .catch((error) => error);
-  // };
 
   const fetchAllGeo = async () => {
     const data = await axios({
@@ -121,7 +78,6 @@ function MyGeofences() {
     setRows(
       users?.data?.result
         ? users?.data?.result?.map((st, i) => {
-            console.log(st.title, "stjjjjjjjjjjjjjjjjjjjjjj");
             return {
               title: <div>{st?.title}</div>,
               description: <div>{st?.description}</div>,

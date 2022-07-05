@@ -35,7 +35,7 @@ function AcceptRequest() {
 
   let [counter, setCounter] = useState(0);
 
-  ///////////////////
+  //   ///////////////////
 
   const fetchAllRequests = async () => {
     const data = await axios({
@@ -109,63 +109,6 @@ function AcceptRequest() {
   }, [request]);
   console.log(rows);
 
-  //////////////////
-
-  // const updateStatus = async (isAccepted, userId) => {
-  //   const data = await axios({
-  //     url: `${process.env.REACT_APP_API_URL}/request/acceptRequest`,
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + ctx.token,
-  //     },
-  //     data: {
-  //       isAccepted: !isAccepted,
-  //       userId: userId,
-  //     },
-  //     method: "PUT",
-  //   });
-  //   // console.log(data, "datataaaaaaaaa");
-  //   setRequest(data);
-  //   console.log(request, "requestttttttttt");
-  //   return data;
-  // };
-
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_API_URL}/request`, {
-  //     headers: {
-  //       Authorization: "Bearer " + ctx.token,
-  //     },
-  //   }).then((response) => {
-  //     response.json().then((users) => {
-  //       // setUsers(users.result);
-  //       const allUserInfo = users.result.map((req, i) => {
-  //         console.log(req, "reqqqqqqqqqqq");
-  //         return {
-  //           name: <>{req.User.name}</>,
-  //           goefence: <>{req.Geofence.title}</>,
-  //           status: (
-  //             <>{req.isAccepted ? <h4>accepted</h4> : <h4>pending...</h4>}</>
-  //           ),
-  //           actions: (
-  //             <>
-  //               <MDButton
-  //                 color="dark"
-  //                 onClick={() => {
-  //                   updateStatus(req.isAccepted, req.userId).then(() =>
-  //                     setCounter(++counter)
-  //                   );
-  //                 }}
-  //               >
-  //                 Accept Request
-  //               </MDButton>
-  //             </>
-  //           ),
-  //         };
-  //       });
-  //       setRows(allUserInfo);
-  //     });
-  //   });
-  // }, [counter]);
   return (
     <DashboardLayout>
       <DashboardNavbar />
