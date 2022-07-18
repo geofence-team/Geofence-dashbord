@@ -43,11 +43,7 @@ import Geofences from "layouts/geofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-// import AddGeofence from "./layouts/geofences/AddGeofence";
 import EditGeofence from "./layouts/geofences/EditGeofencee";
-// import Admins from "layouts/admins";
-// import AddAdmin from "layouts/admins/AddAdmin";
-// import EditAdmin from "layouts/admins/EditAdmin";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
