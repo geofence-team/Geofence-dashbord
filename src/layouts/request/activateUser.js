@@ -1,12 +1,8 @@
-import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
-import MDBadge from "components/MDBadge";
-
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
@@ -46,72 +42,7 @@ function Activate() {
   const [isActive, setIsActive] = useState([]);
 
 
-  // const activate = async (id) => {
-  //   await fetch(`${process.env.REACT_APP_API_URL}/admin/activate/${id}`, {
-  //     method: "PATCH",
-  //     body: JSON.stringify(),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + ctx.token,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       setServerResponse(result.message.join(" "));
-  //       if (result.success) {
-  //         setSnackBarType("success");
-  //       } else {
-  //         setSnackBarType("error");
-  //       }
-  //       setOpenSnackBar(true);
-  //     })
-  //     .catch((error) => error);
-  // };
 
-
-  // useEffect(() => {
-  //   fetch(`${process.env.REACT_APP_API_URL}/admin/signuprequests`, {
-  //     body: JSON.stringify(),
-  //     headers: {
-  //       Authorization: "Bearer " + ctx.token,
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       response
-  //         .json()
-  //         .then((users) => {
-  //           const getusers = users.result.map((user) => {
-  //             return {
-  //               name: <>{user.name}</>,
-  //               username: <>{user.username}</>,
-  //               email: <>{user.email}</>,
-  //               role: <>{user.roleId}</>,
-  //               actions: (
-  //                 <>
-  //                   <MDButton
-  //                     variant="text"
-  //                     color="info"
-  //                     onClick={() => {
-  //                       activate(user.id);
-  //                     }}
-  //                   >
-  //                     Activate
-  //                   </MDButton>
-  //                   <MDBox mt={0.5}></MDBox>
-  //                 </>
-  //               ),
-  //             };
-  //           });
-  //           setRows(getusers);
-  //         })
-  //         .catch((e) => {});
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //       alert("you are not Admin");
-  //     });
-  // }, [users]);
 
   const fetchAllUsers = async () => {
     const data = await axios({

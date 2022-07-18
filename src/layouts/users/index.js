@@ -1,11 +1,8 @@
-import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
-import MDBadge from "components/MDBadge";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
@@ -28,7 +25,6 @@ const columns = [
 
 //////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////////////
 
 function Users() {
   const [rows, setRows] = useState([]);

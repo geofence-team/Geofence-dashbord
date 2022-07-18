@@ -1,19 +1,14 @@
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
-import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
-
 import { AuthContext } from "context/AuthContext";
-import { useRequest } from "lib/hooks/useRequest";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -79,8 +74,6 @@ function JoinRequest() {
     setRows(
       request?.data?.result
         ? request?.data?.result?.map((st, i) => {
-            // console.log(st.id, "idddddddddddddddddddd");
-            console.log(st, "statussssssssssss");
             return {
               name: <div>{st?.User?.name}</div>,
               goefence: <div>{st?.Geofence?.title}</div>,
@@ -106,7 +99,6 @@ function JoinRequest() {
         : []
     );
   }, [request]);
-  console.log(rows);
 
   return (
     <DashboardLayout>
@@ -134,11 +126,6 @@ function JoinRequest() {
                   <MDTypography variant="h6" color="white">
                   Join Request Table
                   </MDTypography>
-                  <Link to="/admins/add">
-                    {/* <MDButton variant="text">
-                      <Icon>add_circle</Icon>&nbsp;Add
-                    </MDButton> */}
-                  </Link>
                 </Grid>
               </MDBox>
               <MDBox pt={3}>
