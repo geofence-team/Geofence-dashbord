@@ -58,9 +58,9 @@ function Geofences() {
               status: (
                 <MDTypography
                   variant="h6"
-                  color={!st?.isActive ? "success" : "error"}
+                  color={st?.isActive ? "success" : "error"}
                 >
-                  {!st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
+                  {st?.isActive ? <h4>active</h4> : <h4>not active</h4>}
                 </MDTypography>
               ),
               // coordinates: <div>{st?.coordinates}</div>,
@@ -97,9 +97,9 @@ function Geofences() {
                     Geofences Table
                   </MDTypography>
                   <Link to="/geofences/add">
-                    <MDButton variant="text">
+                    {/* <MDButton variant="text">
                       <Icon>add_circle</Icon>&nbsp;Add
-                    </MDButton>
+                    </MDButton> */}
                   </Link>
                 </Grid>
               </MDBox>

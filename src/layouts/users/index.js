@@ -74,7 +74,7 @@ function Users() {
     return data;
   };
 
-  /////////////////
+  //////////////////////////////////////////
 
   useEffect(() => {
     fetchAllUsers();

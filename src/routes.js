@@ -43,13 +43,11 @@ import Geofences from "layouts/geofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import AddGeofence from "./layouts/geofences/AddGeofence";
+// import AddGeofence from "./layouts/geofences/AddGeofence";
 import EditGeofence from "./layouts/geofences/EditGeofencee";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
-import AcceptRequest from "layouts/request/accepteRequest";
-import GeofenceRequests from "layouts/geoRequests";
 
 const routes = [
   {
@@ -69,6 +67,16 @@ const routes = [
     icon: <Icon fontSize="small">storefront</Icon>,
     route: "/geofences",
     component: <Geofences />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
+    name: "Join Request",
+    key: "Join-Request",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/Join-Request",
+    component: <JoinRequest />,
     requiresAuth: true,
     inSideNav: true,
   },
