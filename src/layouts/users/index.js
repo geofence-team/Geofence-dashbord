@@ -23,9 +23,6 @@ const columns = [
   { Header: "actions", accessor: "actions", align: "center" },
 ];
 
-//////////////////////////////////////////////////////////////////
-
-
 function Users() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
