@@ -45,14 +45,10 @@ import Geofences from "layouts/geofences";
 import Icon from "@mui/material/Icon";
 import AddGeofence from "./layouts/geofences/AddGeofence";
 import EditGeofence from "./layouts/geofences/EditGeofencee";
-// import Admins from "layouts/admins";
-// import AddAdmin from "layouts/admins/AddAdmin";
-// import EditAdmin from "layouts/admins/EditAdmin";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
 import AcceptRequest from "layouts/request/accepteRequest";
-// import InActiveGeo from "layouts/inActiveGeo";
 import GeofenceRequests from "layouts/geoRequests";
 
 const routes = [
@@ -78,36 +74,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Add Geofence",
-    key: "add-geofence",
-    icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/add-geofence",
-    component: <AddGeofence />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
-  // {
-  //   type: "collapse",
-  //   name: "Activate User",
-  //   key: "Activate-User",
-  //   icon: <Icon fontSize="small">storefront</Icon>,
-  //   route: "/activate-user",
-  //   component: <ActivateUser />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  {
-    type: "collapse",
-    name: "Accept Request",
-    key: "Accept-Request",
-    icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/accept-request",
-    component: <AcceptRequest />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
-  {
-    type: "collapse",
     name: "My Geofences",
     key: "My-Geofences",
     icon: <Icon fontSize="small">storefront</Icon>,
@@ -116,31 +82,6 @@ const routes = [
     requiresAuth: true,
     inSideNav: true,
   },
-
-  // {
-  //   type: "collapse",
-  //   name: "Admins",
-  //   key: "Admins",
-  //   icon: <Icon fontSize="small">people</Icon>,
-  //   route: "/admins",
-  //   component: <Admins />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   key: "add-admin",
-  //   route: "/admins/add",
-  //   component: <AddAdmin />,
-  //   requiresAuth: true,
-  //   inSideNav: false,
-  // },
-  // {
-  //   key: "add-admin",
-  //   route: "/admins/edit/:id",
-  //   component: <EditAdmin />,
-  //   requiresAuth: true,
-  //   inSideNav: false,
-  // },
   {
     type: "collapse",
     name: "Users",
@@ -157,16 +98,6 @@ const routes = [
     component: <AddUser />,
     requiresAuth: true,
     inSideNav: false,
-  },
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/sign-in",
-    component: <SignIn />,
-    requiresAuth: false,
-    inSideNav: true,
   },
   {
     type: "collapse",

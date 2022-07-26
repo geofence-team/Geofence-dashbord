@@ -57,9 +57,9 @@ function Users() {
     return data;
   };
 
-  const deactivate = async (id) => {
+  const changeStatus = async (id) => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/admin/deactivate/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/admin/changeStatus/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
@@ -98,7 +98,7 @@ function Users() {
                   variant="contained"
                   color={st.isActive ? "error" : "success"}
                   onClick={() => {
-                    deactivate(st.id);
+                    changeStatus(st.id);
                   }}
                 >
                   {!st.isActive ? <h4>Activate</h4> : <h4>deactivate</h4>}
