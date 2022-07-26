@@ -37,6 +37,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
+import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
 import Geofences from "layouts/geofences";
 
@@ -69,6 +70,16 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Join Request",
+    key: "Join-Request",
+    icon: <Icon fontSize="small">storefront</Icon>,
+    route: "/Join-Request",
+    component: <JoinRequest />,
+    requiresAuth: true,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
     name: "My Geofences",
     key: "My-Geofences",
     icon: <Icon fontSize="small">storefront</Icon>,
@@ -96,8 +107,18 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/signin",
+    component: <SignIn />,
+    requiresAuth: false,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
     name: "Sign Out",
-    key: "sign-out",
+    key: "signout",
     icon: <Icon fontSize="small">power_settings_new</Icon>,
     route: "/sign-out",
     component: <SignOut />,
