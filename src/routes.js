@@ -37,19 +37,15 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
 import Geofences from "layouts/geofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import EditGeofence from "./layouts/geofences/EditGeofencee";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
-import JoinRequest from "layouts/request/JoinRequest";
-// import InActiveGeo from "layouts/inActiveGeo";
-import GeofenceRequests from "layouts/geoRequests";
+
 
 const routes = [
   {
@@ -83,30 +79,6 @@ const routes = [
     inSideNav: true,
   },
 
-  // {
-  //   type: "collapse",
-  //   name: "Admins",
-  //   key: "Admins",
-  //   icon: <Icon fontSize="small">people</Icon>,
-  //   route: "/admins",
-  //   component: <Admins />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   key: "add-admin",
-  //   route: "/admins/add",
-  //   component: <AddAdmin />,
-  //   requiresAuth: true,
-  //   inSideNav: false,
-  // },
-  // {
-  //   key: "add-admin",
-  //   route: "/admins/edit/:id",
-  //   component: <EditAdmin />,
-  //   requiresAuth: true,
-  //   inSideNav: false,
-  // },
   {
     type: "collapse",
     name: "Users",
@@ -123,16 +95,6 @@ const routes = [
     component: <AddUser />,
     requiresAuth: true,
     inSideNav: false,
-  },
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/sign-in",
-    component: <SignIn />,
-    requiresAuth: false,
-    inSideNav: true,
   },
   {
     type: "collapse",
