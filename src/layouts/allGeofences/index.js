@@ -14,7 +14,6 @@ const columns = [
   { Header: "title", accessor: "title", width: "45%", align: "left" },
   { Header: "description", accessor: "description", align: "left" },
   { Header: "creator", accessor: "creator", align: "center" },
-  // { Header: "actions", accessor: "actions", align: "center" },
 ];
 
 function AllGeofences() {
@@ -25,10 +24,6 @@ function AllGeofences() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
 
-
-
-  
-    
     useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
         body: JSON.stringify(),

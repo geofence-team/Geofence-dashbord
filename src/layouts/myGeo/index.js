@@ -96,7 +96,7 @@ function MyGeofences() {
                     updageGeo(user.id, user.isActive);
                   }}
                 >
-                  {user.isActive ? <h4>DeActivate</h4> : <h4>Activate</h4>}
+                  {user.isActive ? <h4>Deactivate</h4> : <h4>Activate</h4>}
                 </MDButton>
               ),
             };
