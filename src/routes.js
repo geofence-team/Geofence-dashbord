@@ -97,6 +97,16 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/signin",
+    component: <SignIn />,
+    requiresAuth: false,
+    inSideNav: true,
+  },
+  {
+    type: "collapse",
     name: "Sign Out",
     key: "signout",
     icon: <Icon fontSize="small">power_settings_new</Icon>,
