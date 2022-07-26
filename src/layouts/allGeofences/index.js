@@ -7,9 +7,7 @@ import MDTypography from "components/MDTypography";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
-import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
-import { Link } from "react-router-dom";
 import { AuthContext } from "context/AuthContext";
 
 const columns = [
@@ -150,11 +148,7 @@ function AllGeofences() {
                   <MDTypography variant="h6" color="white">
                     Geofences Table
                   </MDTypography>
-                  <Link to="/geofences/add">
-                    <MDButton variant="text">
-                      <Icon>add_circle</Icon>&nbsp;Add
-                    </MDButton>
-                  </Link>
+                  
                 </Grid>
               </MDBox>
               <MDBox pt={3}>
