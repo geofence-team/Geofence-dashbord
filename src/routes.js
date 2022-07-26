@@ -37,6 +37,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
+import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
 import Geofences from "layouts/geofences";
 
@@ -78,7 +79,6 @@ const routes = [
     requiresAuth: true,
     inSideNav: true,
   },
-
   {
     type: "collapse",
     name: "Users",
@@ -95,6 +95,16 @@ const routes = [
     component: <AddUser />,
     requiresAuth: true,
     inSideNav: false,
+  },
+  {
+    type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/sign-in",
+    component: <SignIn />,
+    requiresAuth: false,
+    inSideNav: true,
   },
   {
     type: "collapse",
