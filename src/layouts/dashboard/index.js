@@ -39,49 +39,49 @@ function Dashboard() {
   const mapContainer = useRef();
   const Aljaleyah = { lon: 28.66733, lat: 41.0042962 };
 
-  useEffect(() => {
-    let map = tt.map({
-      key: "McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2",
-      container: mapContainer.current.id,
-      center: Aljaleyah,
-      zoom: 15,
-      language: "en-GB",
-    });
-    map.addControl(new tt.FullscreenControl());
-    map.addControl(new tt.NavigationControl());
-    map.on("load", () => {
-      fetch(
-        "https://api.tomtom.com/geofencing/1/fences/e552b075-76fb-40d6-afc9-deb544d17001?key=McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2"
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          map.addLayer({
-            id: "Fence ",
-            type: "fill",
-            source: {
-              type: "geojson",
-              data: result,
-            },
-            paint: {
-              "fill-color": "purple",
-              "fill-opacity": 0.6,
-            },
-          });
-        });
-    });
-    setMap(map);
-    return () => {
-      map.remove();
-    };
-    //eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   let map = tt.map({
+  //     key: "McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2",
+  //     container: mapContainer.current.id,
+  //     center: Aljaleyah,
+  //     zoom: 15,
+  //     language: "en-GB",
+  //   });
+  //   map.addControl(new tt.FullscreenControl());
+  //   map.addControl(new tt.NavigationControl());
+  //   map.on("load", () => {
+  //     fetch(
+  //       "https://api.tomtom.com/geofencing/1/fences/e552b075-76fb-40d6-afc9-deb544d17001?key=McTEXlkiGaZIuMnnDAiqJo5NtvSNOzs2"
+  //     )
+  //       .then((response) => response.json())
+  //       .then((result) => {
+  //         map.addLayer({
+  //           id: "Fence ",
+  //           type: "fill",
+  //           source: {
+  //             type: "geojson",
+  //             data: result,
+  //           },
+  //           paint: {
+  //             "fill-color": "purple",
+  //             "fill-opacity": 0.6,
+  //           },
+  //         });
+  //       });
+  //   });
+  //   setMap(map);
+  //   return () => {
+  //     map.remove();
+  //   };
+  //   //eslint-disable-next-line
+  // }, []);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <div className="container">
+      {/* <div className="container">
           <div ref={mapContainer} className="map" id="map" />
-        </div>
+        </div> */}
     </DashboardLayout>
   );
 }

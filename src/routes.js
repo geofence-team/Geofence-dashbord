@@ -39,12 +39,12 @@ Coded by www.creative-tim.com
 import Dashboard from "layouts/dashboard";
 import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
-import Geofences from "layouts/geofences";
+import AllGeofences from "layouts/allGeofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import AddGeofence from "./layouts/geofences/AddGeofence";
-import EditGeofence from "./layouts/geofences/EditGeofencee";
+import AddGeofence from "./layouts/allGeofences/AddGeofence";
+import EditGeofence from "./layouts/allGeofences/EditGeofencee";
 // import Admins from "layouts/admins";
 // import AddAdmin from "layouts/admins/AddAdmin";
 // import EditAdmin from "layouts/admins/EditAdmin";
@@ -58,89 +58,44 @@ import GeofenceRequests from "layouts/geoRequests";
 
 
 const routes = [
-  {
-    type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
+
   {
     type: "collapse",
     name: "All Geofences",
-    key: "geofences",
+    key: "All-Geofences",
     icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/geofences",
-    component: <Geofences />,
+    route: "/all-geofences",
+    component: <AllGeofences />,
     requiresAuth: true,
     inSideNav: true,
   },
-  {
-    type: "collapse",
-    name: "Add Geofence",
-    key: "add-geofence",
-    icon: <Icon fontSize="small">grid_on</Icon>,
-    route: "/geofences/add",
-    component: <AddGeofence />,
-    requiresAuth: true,
-    inSideNav: false,
-  },
-  {
-    type: "collapse",
-    name: "Edit Geofence",
-    key: "edit-geofence",
-    icon: <Icon fontSize="small">grid_on</Icon>,
-    route: "/geofences/edit/:id",
-    component: <EditGeofence />,
-    requiresAuth: true,
-    inSideNav: false,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Dashboard",
+  //   key: "dashboard",
+  //   icon: <Icon fontSize="small">dashboard</Icon>,
+  //   route: "/dashboard",
+  //   component: <Dashboard />,
+  //   requiresAuth: true,
+  //   inSideNav: true,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Add Geofence",
+  //   key: "add-geofence",
+  //   icon: <Icon fontSize="small">grid_on</Icon>,
+  //   route: "/geofences/add",
+  //   component: <AddGeofence />,
+  //   requiresAuth: true,
+  //   inSideNav: false,
+  // },
   {
     type: "collapse",
     name: "My Geofences",
     key: "My-Geofences",
     icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/myGeo",
+    route: "/my-Geofences",
     component: <MyGeofences />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
-
-  // {
-    
-  //   type: "collapse",
-  //   name: "Admins",
-  //   key: "Admins",
-  //   icon: <Icon fontSize="small">people</Icon>,
-  //   route: "/admins",
-  //   component: <Admins />,
-  //   requiresAuth: true,
-  //   inSideNav: true,
-  // },
-  // {
-  //   key: "add-admin",
-  //   route: "/admins/add",
-  //   component: <AddAdmin />,
-  //   requiresAuth: true,
-  //   inSideNav: false,
-  // },
-  // {
-  //   key: "add-admin",
-  //   route: "/admins/edit/:id",
-  //   component: <EditAdmin />,
-  //   requiresAuth: true,
-  //   inSideNav: false,
-  // },
-  {
-    type: "collapse",
-    name: "Inactive Geofences",
-    key: "In-ActiveGeo",
-    icon: <Icon fontSize="small">storefront</Icon>,
-    route: "/InActiveGeo",
-    component: <InActiveGeo />,
     requiresAuth: true,
     inSideNav: true,
   },
@@ -163,44 +118,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Signup Requests",
-    key: "Signup-requests",
-    icon: <Icon fontSize="small">people</Icon>,
-    route: "/requests",
-    component: <Requests />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
-  {
-    type: "collapse",
-    name: "Geofence Requests",
-    key: "Geofence-requests",
-    icon: <Icon fontSize="small">people</Icon>,
-    route: "/requests",
-    component: <GeofenceRequests />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
-  {
-    type: "collapse",
-    name: "Sign In",
+    name: "Sign out",
     key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">power_settings_new</Icon>,
     route: "/sign-in",
     component: <SignIn />,
     requiresAuth: false,
     inSideNav: true,
-  },
-  {
-    type: "collapse",
-    name: "Sign Out",
-    key: "sign-out",
-    icon: <Icon fontSize="small">power_settings_new</Icon>,
-    route: "/sign-out",
-    component: <SignOut />,
-    requiresAuth: true,
-    inSideNav: true,
-  },
+  }
 ];
 
 export default routes;

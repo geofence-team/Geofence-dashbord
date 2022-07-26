@@ -70,7 +70,7 @@ function Basic() {
 			response.json().then(loggedIn => {
 				if (loggedIn?.success) {
 					ctx.login(loggedIn?.result?.token)
-					navigate('/dashboard')
+					navigate('/all-geofences')
 				}
 			})
 		})

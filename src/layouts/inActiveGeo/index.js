@@ -31,7 +31,7 @@ function InActiveGeo() {
 
 
   const activateGeofence = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/admin/activateGeofence/${id}`, {
       method: "PATCH",
       body: JSON.stringify(),
       headers: {

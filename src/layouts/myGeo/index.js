@@ -30,7 +30,7 @@ function MyGeofences() {
 
   const deactivateGeofence = (id) => {
 	if (window.confirm('Are you sure you want to deactivate Geofence'))
-     fetch(`${process.env.REACT_APP_API_URL}/geofences/deactivate/${id}`, {
+     fetch(`${process.env.REACT_APP_API_URL}/admin/deactivateGeofence/${id}`, {
       method: "PATCH",
       body: JSON.stringify(),
       headers: {
@@ -52,7 +52,7 @@ function MyGeofences() {
   };
 
   const activateGeofence = async (id) => {
-    await fetch(`${process.env.REACT_APP_API_URL}/geofences/activate/${id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/admin/activateGeofence/${id}`, {
       method: "PATCH",
       body: JSON.stringify(),
       headers: {
@@ -74,7 +74,7 @@ function MyGeofences() {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/Geofences`, {
+    fetch(`${process.env.REACT_APP_API_URL}/geofences`, {
       body: JSON.stringify(),
       headers: {
         Authorization: "Bearer " + ctx.token,
