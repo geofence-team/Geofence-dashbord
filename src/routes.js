@@ -37,14 +37,11 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import SignIn from "layouts/authentication/sign-in";
 import SignOut from "layouts/authentication/sign-out";
 import Geofences from "layouts/geofences";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-// import AddGeofence from "./layouts/geofences/AddGeofence";
-import EditGeofence from "./layouts/geofences/EditGeofencee";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
