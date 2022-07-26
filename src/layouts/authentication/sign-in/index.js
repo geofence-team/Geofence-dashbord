@@ -43,16 +43,41 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
+  const ctx = useContext(AuthContext);
+  const navigate = useNavigate();
 
-	const ctx = useContext(AuthContext)
-	const navigate = useNavigate()
+  const [rememberMe, setRememberMe] = useState(false);
 
-	const [rememberMe, setRememberMe] = useState(false);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
-	const emailRef = useRef(null)
-	const passwordRef = useRef(null)
+  const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-	const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const login = () => {
+    const email = emailRef.current.querySelector("input[type=email]").value;
+    const password = passwordRef.current.querySelector(
+      "input[type=password]"
+    ).value;
+    fetch(`${process.env.REACT_APP_API_URL}/admin/signin`, {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        response.json().then((loggedIn) => {
+          if (loggedIn?.success) {
+            ctx.login(loggedIn?.result?.token);
+            navigate("/dashboard");
+          }
+        });
+      })
+      .catch((e) => console.log(e));
+  };
 
 	const login = () => {
 		const email = emailRef.current.querySelector('input[type=email]').value

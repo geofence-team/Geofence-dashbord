@@ -37,7 +37,15 @@ function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [map, setMap] = useState();
   const mapContainer = useRef();
-  const Aljaleyah = { lon: 28.66733, lat: 41.0042962 };
+  const Aljaleyah = { lon: 28.7567138671875, lat: 41.062009478169955 };
+  const Avceler = { lon: 28.7567138671875, lat: 41.062009478169955 };
+
+  // { lon: 28.7567138671875, lat: 41.062009478169955 },
+  // { lon: 28.7567138671875, lat: 41.062009478169955 },
+
+  //{ lon: 28.7567138671875, lat: 41.062009478169955 };
+  // 28.7567138671875,
+  //               41.062009478169955
 
   // useEffect(() => {
   //   let map = tt.map({

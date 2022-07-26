@@ -1,7 +1,9 @@
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Footer from "examples/Footer";
@@ -9,103 +11,103 @@ import DataTable from "examples/Tables/DataTable";
 import { useEffect, useState, useContext } from "react";
 import Icon from "@mui/material/Icon";
 import MDButton from "components/MDButton";
-import { Link } from "react-router-dom";
+
 import { AuthContext } from "context/AuthContext";
+import { useRequest } from "lib/hooks/useRequest";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const columns = [
-  { Header: "title", accessor: "title", align: "center" },
-  { Header: "description", accessor: "description", align: "center" },
-  { Header: "coordinates", accessor: "coordinates", align: "center" },
-  { Header: "status", accessor: "status", align: "center" },
-  { Header: "actions", accessor: "actions", align: "center" },
+  { Header: "name", accessor: "name", width: "25%", align: "center" },
+  { Header: "goefence", accessor: "goefence", width: "25%", align: "center" },
+  { Header: "status", accessor: "status", width: "25%", align: "center" },
+  { Header: "actions", accessor: "actions", width: "25%", align: "center" },
 ];
 
-function MyGeofences() {
+function JoinRequest() {
   const [rows, setRows] = useState([]);
   const ctx = useContext(AuthContext);
-  const [serverResponse, setServerResponse] = useState(" ");
-  const [snackBarType, setSnackBarType] = useState("success");
-  const [openSnackBar, setOpenSnackBar] = useState(false);
-  const closeSnackBar = () => setOpenSnackBar(false);
 
-  const [users, setUsers] = useState([]);
+  const [request, setRequest] = useState([]);
 
-  const [isActive, setIsActive] = useState([]);
+  const [isActive, setIsActive] = useState();
+  const [accept, setIsAccept] = useState([]);
+
   let [counter, setCounter] = useState(0);
 
-  const fetchAllGeo = async () => {
+  //   ///////////////////
+
+  const fetchAllRequests = async () => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/geofences`,
+      url: `${process.env.REACT_APP_API_URL}/requests/getRequestedUsers`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
       },
       method: "GET",
     });
-    
-    console.log(data, 'gjghghghfhgfhgf')
-    setUsers(data);
-    
+    setRequest(data);
 
     return data;
   };
 
-  const updageGeo = async (id, isActive) => {
+  const updateStatus = async (id, userId) => {
     const data = await axios({
-      url: `${process.env.REACT_APP_API_URL}/geofences`,
+      url: `${process.env.REACT_APP_API_URL}/requests/approve/${id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + ctx.token,
       },
       data: {
-        isActive: !isActive,
-        id: id,
+        id,
+        userId
       },
       method: "PUT",
     });
 
-    setIsActive(data);
+    setIsAccept(data);
     setCounter(++counter);
-    console.log(counter, "counterrrrrrrrrrr");
 
     return data;
   };
 
   useEffect(() => {
-    fetchAllGeo();
+    fetchAllRequests();
   }, [counter]);
 
   useEffect(() => {
     setRows(
-      users?.data?.result
-        ? users?.data?.result?.map((user, i) => {
+      request?.data?.result
+        ? request?.data?.result?.map((st, i) => {
+            // console.log(st.id, "idddddddddddddddddddd");
+            console.log(st, "statussssssssssss");
             return {
-              title: <div>{user?.title}</div>,
-              description: <div>{user?.description}</div>,
-              coordinates: <div>{user?.coordinates}</div>,
+              name: <div>{st?.User?.name}</div>,
+              goefence: <div>{st?.Geofence?.title}</div>,
               status: (
                 <div>
-                  {user?.isActive ? <h4>active</h4> : <h4>inActive</h4>}
+                  {st.isAccepted ? <h4>Allowed to join</h4> : <h4>not Allowed to join </h4>}
                 </div>
               ),
               actions: (
                 <MDButton
-                  key={user.id}
+                  key={st.id}
                   variant="contained"
-                  color={user.isActive ? "error" : "success"}
+                  color={st.isAccepted ? "error" : "success"}
                   onClick={() => {
-                    updageGeo(user.id, user.isActive);
+                    updateStatus(st.id , st.userId);
                   }}
                 >
-                  {user.isActive ? <h4>DeActivate</h4> : <h4>Activate</h4>}
+                  {!st.isAccepted ? <h4>Allow</h4> : <h4>Don't Allow</h4>}
                 </MDButton>
               ),
             };
           })
         : []
     );
-  }, [users]);
+  }, [request]);
+  console.log(rows);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -130,9 +132,9 @@ function MyGeofences() {
                   alignItems="center"
                 >
                   <MDTypography variant="h6" color="white">
-                    Geofences Table
+                  Join Request Table
                   </MDTypography>
-                  <Link to="/geofences/add">
+                  <Link to="/admins/add">
                     {/* <MDButton variant="text">
                       <Icon>add_circle</Icon>&nbsp;Add
                     </MDButton> */}
@@ -157,4 +159,4 @@ function MyGeofences() {
   );
 }
 
-export default MyGeofences;
+export default JoinRequest;

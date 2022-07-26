@@ -51,11 +51,6 @@ import EditGeofence from "./layouts/allGeofences/EditGeofencee";
 import AddUser from "layouts/users/AddUser";
 import Users from "layouts/users";
 import MyGeofences from "layouts/myGeo";
-import Requests from "layouts/requests";
-import InActiveGeo from "layouts/inActiveGeo";
-import GeofenceRequests from "layouts/geoRequests";
-
-
 
 const routes = [
 
