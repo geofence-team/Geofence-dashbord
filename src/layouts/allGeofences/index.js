@@ -13,7 +13,8 @@ import { AuthContext } from "context/AuthContext";
 const columns = [
   { Header: "title", accessor: "title", width: "45%", align: "left" },
   { Header: "description", accessor: "description", align: "left" },
-  { Header: "actions", accessor: "actions", align: "center" },
+  { Header: "creator", accessor: "creator", align: "center" },
+  // { Header: "actions", accessor: "actions", align: "center" },
 ];
 
 function AllGeofences() {
@@ -24,52 +25,10 @@ function AllGeofences() {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const closeSnackBar = () => setOpenSnackBar(false);
 
-  const deactivateGeofence = (id) => {
-    if (window.confirm('Are you sure you want to deactivate Geofence'));
-       fetch(`${process.env.REACT_APP_API_URL}/geofences/${id}`, {
-        method: "DELETE",
-        body: JSON.stringify(),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ctx.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          setServerResponse(result.message.join(" "));
-          if (result.success) {
-            setSnackBarType("success");
-          } else {
-            setSnackBarType("error");
-          }
-          setOpenSnackBar(true);
-        })
-        .catch((error) => error);
-    };
+
 
   
-    const activateGeofence = async (id) => {
-      await fetch(`${process.env.REACT_APP_API_URL}/admin/activateGeofence/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + ctx.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          setServerResponse(result.message.join(" "));
-          if (result.success) {
-            setSnackBarType("success");
-          } else {
-            setSnackBarType("error");
-          }
-          setOpenSnackBar(true);
-        })
-        .catch((error) => error);
-    };
-  
+    
     useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}/geofences/all`, {
         body: JSON.stringify(),
@@ -86,29 +45,8 @@ function AllGeofences() {
                 return {
                   title: <>{geofence.title}</>,
                   description: <>{geofence.description}</>,
-                  coordinates: <>{geofence.coordinates}</>,
-                  actions: (
-                    <>
-                      <MDButton
-                        variant="text"
-                        color="info"
-                        onClick={() => {
-                          activateGeofence(geofence.id);
-                        }}
-                      >
-                        Activate
-                      </MDButton>
-                      <MDButton
-                        variant="text"
-                        color="error"
-                        onClick={() => {
-                          deactivateGeofence(geofence.id);
-                        }}
-                      >
-                        DELETE
-                      </MDButton>
-                    </>
-                  ),
+                  creator: <>{geofence.ownerName}</>
+                  
                 };
               });
               setRows(getGeofences);

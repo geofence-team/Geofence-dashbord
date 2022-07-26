@@ -16,7 +16,6 @@ import axios from "axios";
 const columns = [
   { Header: "title", accessor: "title", align: "center" },
   { Header: "description", accessor: "description", align: "center" },
-  { Header: "coordinates", accessor: "coordinates", align: "center" },
   { Header: "status", accessor: "status", align: "center" },
   { Header: "actions", accessor: "actions", align: "center" },
 ];
@@ -67,7 +66,6 @@ function MyGeofences() {
 
     setIsActive(data);
     setCounter(++counter);
-    console.log(counter, "counterrrrrrrrrrr");
 
     return data;
   };
@@ -86,7 +84,7 @@ function MyGeofences() {
               coordinates: <div>{user?.coordinates}</div>,
               status: (
                 <div>
-                  {user?.isActive ? <h4>active</h4> : <h4>inActive</h4>}
+                  {user?.isActive ? <h4>active</h4> : <h4>inactive</h4>}
                 </div>
               ),
               actions: (
